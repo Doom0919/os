@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="mn">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Slide 7 - Processes vs. Threads</title>
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #0d0d0d, #1c1c1c, #3a3a3a);
+        color: #fff;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        overflow: hidden;
+      }
+
+      h1 {
+        font-size: 3em;
+        margin-bottom: 20px;
+        text-shadow: 0 0 15px rgba(255, 235, 59, 0.7);
+        animation: glow 2s infinite alternate;
+      }
+
+      @keyframes glow {
+        from {
+          text-shadow: 0 0 10px rgba(255, 235, 59, 0.6);
+        }
+        to {
+          text-shadow: 0 0 25px rgba(255, 235, 59, 1);
+        }
+      }
+
+      .content {
+        background: rgba(255, 255, 255, 0.05);
+        padding: 30px;
+        border-radius: 15px;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
+        max-width: 1100px;
+        text-align: center;
+        animation: fadeIn 1.5s ease;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .highlight {
+        color: #ffeb3b;
+        font-weight: bold;
+      }
+
+      .comparison {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 30px;
+        margin-top: 30px;
+      }
+
+      .column {
+        background: rgba(255, 255, 255, 0.03);
+        padding: 25px;
+        border-radius: 12px;
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
+      }
+
+      .column h2 {
+        font-size: 1.8em;
+        margin-bottom: 20px;
+        padding-bottom: 10px;
+        border-bottom: 2px solid;
+      }
+
+      .column.process h2 {
+        color: #2196f3;
+        border-color: #2196f3;
+      }
+
+      .column.thread h2 {
+        color: #ff9800;
+        border-color: #ff9800;
+      }
+
+      .feature {
+        background: rgba(255, 255, 255, 0.05);
+        padding: 15px;
+        margin: 12px 0;
+        border-radius: 8px;
+        text-align: left;
+        font-size: 1.05em;
+        line-height: 1.6;
+        box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
+        transition: all 0.3s ease;
+      }
+
+      .feature:hover {
+        transform: translateX(5px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+      }
+
+      .column.process .feature {
+        border-left: 4px solid #2196f3;
+      }
+
+      .column.thread .feature {
+        border-left: 4px solid #ff9800;
+      }
+
+      .feature strong {
+        color: #ffeb3b;
+      }
+
+      .hint {
+        margin-top: 30px;
+        font-size: 1em;
+        color: #bbbbbb;
+        font-style: italic;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Processes vs. Threads</h1>
+    <div class="content">
+      <div class="comparison">
+        <div class="column process">
+          <h2>🔷 Process</h2>
+          <div class="feature">
+            <strong>Санах ой:</strong> Тусдаа санах ойтой
+          </div>
+          <div class="feature"><strong>Үүсгэх:</strong> Их нөөц шаарддаг</div>
+          <div class="feature">
+            <strong>Харилцаа холбоо:</strong> IPC ашиглах (өндөр зардал)
+          </div>
+          <div class="feature">
+            <strong>Бие даасан байдал:</strong> Бүрэн тусгаарлагдсан
+          </div>
+          <div class="feature"><strong>Context Switch:</strong> Удаан</div>
+          <div class="feature"><strong>PCB:</strong> Өөрийн гэсэн PCB-тай</div>
+        </div>
+
+        <div class="column thread">
+          <h2>🔶 Thread</h2>
+          <div class="feature">
+            <strong>Санах ой:</strong> Процесстэй хуваалцана
+          </div>
+          <div class="feature"><strong>Үүсгэх:</strong> Бага нөөц шаарддаг</div>
+          <div class="feature">
+            <strong>Харилцаа холбоо:</strong> Шууд санах ой (бага зардал)
+          </div>
+          <div class="feature">
+            <strong>Бие даасан байдал:</strong> Процесс доторх хамааралтай
+          </div>
+          <div class="feature"><strong>Context Switch:</strong> Хурдан</div>
+          <div class="feature">
+            <strong>TCB:</strong> Thread Control Block-тай
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hint">
+      💡 'D' → дараагийн слайд | 'A' → өмнөх слайд руу буцах
+    </div>
+
+    <script>
+      document.addEventListener("keydown", function (event) {
+        if (event.key.toLowerCase() === "d") {
+          window.location.href = "slide8.html";
+        }
+        if (event.key.toLowerCase() === "a") {
+          window.location.href = "slide6.html";
+        }
+      });
+    </script>
+  </body>
+</html>
