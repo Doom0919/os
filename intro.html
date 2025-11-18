@@ -1,94 +1,156 @@
 <!DOCTYPE html>
 <html lang="mn">
+
 <head>
     <meta charset="UTF-8">
     <title>Үйлдлийн систем - Танилцуулга</title>
     <style>
-        /* Base styles */
-        * {
-            box-sizing: border-box;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            text-align: center;
-            background: linear-gradient(135deg, #000000 0%, #1c1c1c 60%, #434343 100%);
+            background: linear-gradient(135deg, #0d0d0d, #1c1c1c, #3a3a3a);
             color: #ffffff;
-            height: 100vh;
-            margin: 0;
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
-            justify-content: center;
             align-items: center;
+            justify-content: center;
             padding: 20px;
+            overflow: hidden;
         }
-        .content {
-            display: flex;
-            flex-direction: row;
-            
-        }
-        /* Heading */
+
         h1 {
             font-size: 3em;
-            margin-bottom: 20px;
-            text-shadow: 3px 3px 8px rgba(0,0,0,0.7);
-            transition: transform 0.3s ease;
+            margin-bottom: 30px;
+            text-shadow: 0 0 15px rgba(255, 235, 59, 0.7);
+            animation: glow 2s infinite alternate;
         }
-        h1:hover {
-            transform: scale(1.05);
+        @keyframes glow {
+            from { text-shadow: 0 0 10px rgba(255,235,59,0.6); }
+            to { text-shadow: 0 0 25px rgba(255,235,59,1); }
         }
 
-        /* Paragraph */
-        p {
-            font-size: 1.4em;
+        .content {
+            background: rgba(255,255,255,0.05);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.6);
             max-width: 900px;
-            line-height: 1.8;
-            text-shadow: 1px 1px 4px rgba(0,0,0,0.4);
-            margin: 15px auto;
+            text-align: center;
+            animation: fadeIn 1.5s ease;
+            display: flex;
+            flex-direction: row;
+             height: 400px;
+            align-items: center;
+        }
+        @keyframes fadeIn { from {opacity:0; transform:translateY(20px);} to {opacity:1; transform:translateY(0);} }
+
+        .content p { font-size: 1.4em; line-height: 1.8; margin-bottom: 20px; }
+        .highlight { color: #ffeb3b; font-weight: bold; }
+
+        .simulation {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+            position: relative;
+            margin-left: 50px;
+           
         }
 
-        .highlight {
-            color: #ffeb3b;
-            font-weight: bold;
-        }
-
-        /* Image */
-        img {
-            max-width: 80%;
-            height: auto;
-            margin-top: 40px;
+        .process {
+            background: #2196f3;
+            padding: 20px 40px;
             border-radius: 12px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.5);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        img:hover {
-            transform: scale(1.02);
-            box-shadow: 0 12px 30px rgba(0,0,0,0.6);
+            font-weight: bold;
+            color: #fff;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.5);
+            margin-bottom: 20px;
+            position: relative;
+            height: 200px;
+            width: 200px;
         }
 
-        /* Responsive */
+        .threads {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            max-width: 600px;
+        }
+
+        .thread {
+            background: #ff9800;
+            padding: 10px 15px;
+            border-radius: 8px;
+            color: #fff;
+            font-size: 0.9em;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+            opacity: 0;
+            transform: translateY(20px);
+            animation: spawn 2s forwards;
+        }
+
+        @keyframes spawn {
+            0% { opacity: 0; transform: translateY(20px); }
+            50% { opacity: 1; transform: translateY(0); }
+            100% { opacity: 0; transform: translateY(-20px); }
+        }
+
+        .hint { margin-top: 30px; font-size: 1em; color: #bbbbbb; font-style: italic; }
+
         @media (max-width: 768px) {
             h1 { font-size: 2.2em; }
-            p { font-size: 1.2em; }
-            img { max-width: 95%; }
+            .content p { font-size: 1.1em; }
         }
     </style>
 </head>
-<body>
-    <h1>Үйлдлийн систем гэж юу вэ?</h1>
-    <div class="content">
-         <p>
-        Үйлдлийн систем нь компьютерын <span class="highlight">hardware</span> болон
-        хэрэглэгчийн програмуудын хоорондох дунд шатны програм хангамж бөгөөд
-        <span class="highlight">ресурсуудыг удирдан зохион байгуулж</span>,
-        програмуудыг аюулгүй, үр дүнтэй ажиллуулах боломжийг олгодог.
-    </p>
-    <img src="./Image/image.png" alt="Үйлдлийн системийн бүтэц">
 
+<body>
+    <h1>ПРОЦЕСС БА САЛБАР ПРОЦЕСС</h1>
+    <div class="content">
+        <p>
+            <span class="highlight">Процесс</span> нь үйлдлийн системийн үндсэн нэгж бөгөөд
+            програмын гүйцэтгэлийг удирдана. <span class="highlight">Салбар процесс</span> нь
+            тухайн процессоос үүссэн тусдаа урсгал бөгөөд системийн
+            <span class="highlight">нөөцийг үр ашигтай</span> ашиглах боломжийг олгодог.
+        </p>
+        <div class="simulation">
+            <div class="process">Процесс
+                <div class="threads" id="threads"></div>
+            </div>
+            
+        </div>
     </div>
+
+
+
     <script>
-        document.addEventListener('keydown', function(event) {
-            if(event.key === 'd' || event.key === 'D') {
-                window.location.href = 'slide1.html'; // Slide1 руу шилжих
+        // repeatedly spawn threads
+        const threadsContainer = document.getElementById('threads');
+        let threadCount = 0;
+
+        function createThread() {
+            threadCount++;
+            const thread = document.createElement('div');
+            thread.className = 'thread';
+            thread.textContent = 'Thread ' + threadCount;
+            threadsContainer.appendChild(thread);
+
+            // remove after animation ends (~2s)
+            setTimeout(() => {
+                threadsContainer.removeChild(thread);
+            }, 2000);
+        }
+
+        // spawn a new thread every 1s
+        setInterval(createThread, 1000);
+
+        // slide navigation
+        document.addEventListener('keydown', function (event) {
+            if (event.key.toLowerCase() === 'd') {
+                window.location.href = 'slide1.html';
             }
         });
     </script>

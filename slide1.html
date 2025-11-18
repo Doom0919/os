@@ -1,33 +1,198 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="mn">
 <head>
     <meta charset="UTF-8">
-    <title>Slide 1</title>
+    <title>Slide 1 - Үйлдлийн систем гэж юу вэ</title>
     <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
         body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            background-color: #d0e0f0;
-            padding-top: 100px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0d0d0d, #1c1c1c, #3a3a3a);
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            overflow: hidden;
         }
-        .button {
-            margin-top: 50px;
-            padding: 10px 20px;
-            font-size: 18px;
-            cursor: pointer;
+
+        h1 {
+            font-size: 3em;
+            margin-bottom: 20px;
+            text-shadow: 0 0 15px rgba(255, 235, 59, 0.7);
+            animation: glow 2s infinite alternate;
+        }
+
+        @keyframes glow {
+            from { text-shadow: 0 0 10px rgba(255,235,59,0.6); }
+            to { text-shadow: 0 0 25px rgba(255,235,59,1); }
+        }
+
+        .content {
+            background: rgba(255,255,255,0.05);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.6);
+            max-width: 1000px;
+            text-align: center;
+            animation: fadeIn 1.5s ease;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+        }
+
+        @keyframes fadeIn {
+            from {opacity:0; transform:translateY(20px);}
+            to {opacity:1; transform:translateY(0);}
+        }
+
+        .content p {
+            font-size: 1.4em;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        .highlight {
+            color: #ffeb3b;
+            font-weight: bold;
+        }
+
+        /* Simulation area */
+        .simulation {
+            position: relative;
+            width: 900px;
+            height: 400px;
+            margin-top: 30px;
+            
+        }
+
+        .center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #2196f3;
+            color: #fff;
+            padding: 20px 30px;
+            border-radius: 50%;
+            font-weight: bold;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.5);
+            z-index: 2;
+        }
+
+        .orbit {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            animation: rotate 20s linear infinite;
+        }
+
+        .component {
+            position: absolute;
+            width: 120px;
+            height: 40px;
+            background: #ff9800;
+            color: #fff;
+            font-weight: bold;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+        }
+
+        .component:nth-child(1) { top: 0; left: 50%; transform: translateX(-50%); }
+        .component:nth-child(2) { top: 20%; left: 85%; transform: translate(-50%, -50%); }
+        .component:nth-child(3) { top: 50%; left: 100%; transform: translate(-50%, -50%); }
+        .component:nth-child(4) { bottom: 20%; left: 85%; transform: translate(-50%, 50%); }
+        .component:nth-child(5) { bottom: 0; left: 50%; transform: translateX(-50%); }
+        .component:nth-child(6) { bottom: 20%; left: 15%; transform: translate(-50%, 50%); }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .hint {
+            margin-top: 30px;
+            font-size: 1em;
+            color: #bbbbbb;
+            font-style: italic;
+        }
+         .threads {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            max-width: 600px;
+            position: absolute;
+            z-index: 1000;
+            top: 120px;
+            left: 30%;
+        }
+
+        .thread {
+            background: #ff9800;
+            padding: 10px 15px;
+            border-radius: 8px;
+            color: #fff;
+            font-size: 0.9em;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+            opacity: 0;
+            transform: translateY(20px);
+            animation: spawn 2s forwards;
+        }
+
+           @keyframes spawn {
+            0% { opacity: 0; transform: translateY(20px); }
+            50% { opacity: 1; transform: translateY(0); }
+            100% { opacity: 0; transform: translateY(-20px); }
         }
     </style>
 </head>
 <body>
-    <h1>Slide 1</h1>
-    <p>Here is the content for Slide 1.</p>
-     <script>
+    <h1>Процесс бол</h1>
+    <div class="content">
+        <p>
+           <span class="highlight">Процесс</span> гэдэг нь үйлдлийн системийн гүйцэтгэж буй 
+            програмын <span class="highlight">идэвхтэй нэгж</span> юм. Энэ нь санах ой, CPU, 
+            оролт/гаралтын нөөцийг ашиглан ажилладаг.
+        </p>
+        <div class="simulation">
+            <img src="./Image/process.png" alt="OS Diagram" style="width:100%; height:100%; border-radius:15px; box-shadow:0 8px 25px rgba(0,0,0,0.6);">
+            <div class="threads" id="threads"></div>
+        </div>
+    </div>
+
+    
+    <script>
+           const threadsContainer = document.getElementById('threads');
+        let threadCount = 0;
+
+        function createThread() {
+            threadCount++;
+            const thread = document.createElement('div');
+            thread.className = 'thread';
+            thread.textContent = 'process ' + threadCount;
+            threadsContainer.appendChild(thread);
+
+            // remove after animation ends (~2s)
+            setTimeout(() => {
+                threadsContainer.removeChild(thread);
+            }, 2000);s
+        }
+
+        // spawn a new thread every 1s
+        setInterval(createThread, 1000);
         document.addEventListener('keydown', function(event) {
-            if(event.key === 'd' || event.key === 'D') {
-                window.location.href = 'slide2.html'; // Go to slide1.html
+            if(event.key.toLowerCase() === 'd') {
+                window.location.href = 'slide2.html';
             }
-            if(event.key === 'a' || event.key === 'A') {
-               window.location.href = 'intro.html'; 
+            if(event.key.toLowerCase() === 'a') {
+                window.location.href = 'intro.html';
             }
         });
     </script>

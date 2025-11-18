@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+    <meta charset="UTF-8">
+    <title>Process States & Lifecycle</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+      body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #0d0d0d, #1c1c1c, #3a3a3a); /* ← same as before */
+    color: #fff;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    overflow: hidden;
+}
+
+
+        h1 {
+            font-size: 2.8em;
+            margin-bottom: 20px;
+            text-shadow: 0 0 15px rgba(255, 235, 59, 0.7);
+            animation: glow 2s infinite alternate;
+        }
+
+        @keyframes glow {
+            from { text-shadow: 0 0 10px rgba(255,235,59,0.6); }
+            to { text-shadow: 0 0 25px rgba(255,235,59,1); }
+        }
+
+        .content {
+            background: rgba(255,255,255,0.05);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.6);
+            max-width: 1000px;
+            text-align: center;
+            animation: fadeIn 1.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from {opacity:0; transform:translateY(20px);}
+            to {opacity:1; transform:translateY(0);}
+        }
+
+        .content p {
+            font-size: 1.4em;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        .highlight {
+            color: #ffeb3b;
+            font-weight: bold;
+        }
+
+        .lifecycle {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .state {
+            background: #2196f3;
+            padding: 15px 25px;
+            border-radius: 12px;
+            font-weight: bold;
+            color: #fff;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.5);
+            position: relative;
+            animation: pulse 2s infinite ease-in-out;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .arrow {
+            width: 40px;
+            height: 40px;
+            border-top: 4px solid #ffeb3b;
+            border-right: 4px solid #ffeb3b;
+            transform: rotate(45deg);
+            margin-top: 20px;
+        }
+
+        .hint {
+            margin-top: 30px;
+            font-size: 1em;
+            color: #bbbbbb;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <h1>Процессын төлөв ба амьдралын мөчлөг</h1>
+    <div class="content">
+        <p>
+            Процесс нь <span class="highlight">шинээр үүсэх</span>, <span class="highlight">бэлэн болох</span>, 
+            <span class="highlight">ажиллах</span>, <span class="highlight">хүлээх</span>, 
+            <span class="highlight">дуусах</span гэсэн төлвүүдээр дамжин амьдралын мөчлөгөө туулдаг.
+        </p>
+        <div class="lifecycle">
+            <div class="state">New</div>
+            <div class="arrow"></div>
+            <div class="state">Ready</div>
+            <div class="arrow"></div>
+            <div class="state">Running</div>
+            <div class="arrow"></div>
+            <div class="state">Waiting</div>
+            <div class="arrow"></div>
+            <div class="state">Terminated</div>
+        </div>
+    </div>
+
+    <div class="hint">💡 'D' → дараагийн слайд | 'A' → өмнөх слайд руу буцах</div>
+
+    <script>
+        document.addEventListener('keydown', function(event) {
+            if(event.key.toLowerCase() === 'd') {
+                window.location.href = 'slide4.html'; // Next slide
+            }
+            if(event.key.toLowerCase() === 'a') {
+                window.location.href = 'slide2.html'; // Previous slide
+            }
+        });
+    </script>
+</body>
+</html>

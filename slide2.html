@@ -1,33 +1,108 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="mn">
 <head>
     <meta charset="UTF-8">
-    <title>Slide 2</title>
+    <title>Process Control Block</title>
     <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
         body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            background-color: #f0d0d0;
-            padding-top: 100px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0d0d0d, #1c1c1c, #3a3a3a); /* same background as before */
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            overflow: hidden;
         }
-        .button {
-            margin-top: 50px;
-            padding: 10px 20px;
-            font-size: 18px;
-            cursor: pointer;
+
+        h1 {
+            font-size: 3em;
+            margin-bottom: 20px;
+            text-shadow: 0 0 15px rgba(255, 235, 59, 0.7);
+            animation: glow 2s infinite alternate;
+        }
+
+        @keyframes glow {
+            from { text-shadow: 0 0 10px rgba(255,235,59,0.6); }
+            to { text-shadow: 0 0 25px rgba(255,235,59,1); }
+        }
+
+        .content {
+            background: rgba(255,255,255,0.05);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.6);
+            max-width: 900px;
+            text-align: center;
+            animation: fadeIn 1.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from {opacity:0; transform:translateY(20px);}
+            to {opacity:1; transform:translateY(0);}
+        }
+
+        .pcb {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .field {
+            background: #2196f3;
+            padding: 15px;
+            border-radius: 10px;
+            font-weight: bold;
+            color: #fff;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.5);
+            animation: pulse 3s infinite ease-in-out;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .hint {
+            margin-top: 30px;
+            font-size: 1em;
+            color: #bbbbbb;
+            font-style: italic;
         }
     </style>
 </head>
 <body>
-    <h1>Slide 2</h1>
-    <p>Here is the content for Slide 2.</p>
-     <script>
+    <h1>Process Control Block</h1>
+    <div class="content">
+        <p>
+            <span class="highlight">Process Control Block (PCB)</span> нь үйлдлийн системийн 
+            <span class="highlight">процессийн тухай мэдээллийг хадгалдаг</span> өгөгдлийн бүтэц юм.
+        </p>
+        <div class="pcb">
+            <div class="field">Process ID</div>
+            <div class="field">Process State</div>
+            <div class="field">Program Counter</div>
+            <div class="field">CPU Registers</div>
+            <div class="field">Memory Management Info</div>
+            <div class="field">I/O Status Info</div>
+        </div>
+    </div>
+
+    <div class="hint">💡 'D' → дараагийн слайд | 'A' → өмнөх слайд руу буцах</div>
+
+    <script>
         document.addEventListener('keydown', function(event) {
-            if(event.key === 'd' || event.key === 'D') {
-               // Go to slide1.html
+            if(event.key.toLowerCase() === 'd') {
+                window.location.href = 'slide3.html'; // Next slide
             }
-            if(event.key === 'a' || event.key === 'A') {
-               window.location.href = 'slide1.html'; 
+            if(event.key.toLowerCase() === 'a') {
+                window.location.href = 'slide1.html'; // Previous slide
             }
         });
     </script>
