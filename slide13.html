@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="mn">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Slide 12 - Олон thread гэж юу вэ</title>
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #0d0d0d, #1c1c1c, #3a3a3a);
+        color: #fff;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        overflow: hidden;
+      }
+
+      h1 {
+        font-size: 3em;
+        margin-bottom: 20px;
+        text-shadow: 0 0 15px rgba(255, 235, 59, 0.7);
+        animation: glow 2s infinite alternate;
+      }
+
+      @keyframes glow {
+        from {
+          text-shadow: 0 0 10px rgba(255, 235, 59, 0.6);
+        }
+        to {
+          text-shadow: 0 0 25px rgba(255, 235, 59, 1);
+        }
+      }
+
+      .content {
+        background: rgba(255, 255, 255, 0.05);
+        padding: 40px;
+        border-radius: 15px;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
+        max-width: 95vw;
+        width: 1000px;
+        text-align: center;
+        animation: fadeIn 1.5s ease;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .definition {
+        font-size: 1.4em;
+        line-height: 1.8;
+        margin-bottom: 40px;
+      }
+
+      .highlight {
+        color: #ffeb3b;
+        font-weight: bold;
+      }
+
+      .examples {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 25px;
+        margin-top: 30px;
+      }
+
+      .example-card {
+        background: rgba(33, 150, 243, 0.2);
+        border: 3px solid #2196f3;
+        padding: 25px;
+        border-radius: 12px;
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
+        transition: all 0.3s ease;
+        text-align: left;
+      }
+
+      .example-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 10px 30px rgba(33, 150, 243, 0.8);
+      }
+
+      .example-icon {
+        font-size: 2.5em;
+        margin-bottom: 15px;
+      }
+
+      .example-card h3 {
+        color: #2196f3;
+        font-size: 1.5em;
+        margin-bottom: 10px;
+      }
+
+      .example-card p {
+        font-size: 1.1em;
+        line-height: 1.5;
+        color: #ddd;
+      }
+
+      .hint {
+        margin-top: 30px;
+        font-size: 1em;
+        color: #bbbbbb;
+        font-style: italic;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Олон thread гэж юу вэ?</h1>
+    <div class="content">
+      <div class="definition">
+        Нэг процесс <span class="highlight">олон thread</span> үүсгэж
+        <span class="highlight">параллель ажиллах</span> боломж
+      </div>
+
+      <div class="examples">
+        <div class="example-card">
+          <div class="example-icon">🌐</div>
+          <h3>Browser</h3>
+          <p>
+            <span class="highlight">Tabs = processes</span><br />
+            Tab доторх rendering = <span class="highlight">threads</span>
+          </p>
+        </div>
+
+        <div class="example-card">
+          <div class="example-icon">🎮</div>
+          <h3>Games</h3>
+          <p>Render, audio, physics threads зэрэг ажиллана</p>
+        </div>
+
+        <div class="example-card">
+          <div class="example-icon">📱</div>
+          <h3>Mobile Apps</h3>
+          <p>UI thread, background sync threads хуваагдана</p>
+        </div>
+
+        <div class="example-card">
+          <div class="example-icon">🖥️</div>
+          <h3>Web Server</h3>
+          <p>Хүсэлт бүр thread болж олон хэрэглэгч үйлчлүүлнэ</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="hint">
+      💡 'D' → дараагийн слайд | 'A' → өмнөх слайд руу буцах
+    </div>
+
+    <script>
+      document.addEventListener("keydown", function (event) {
+        if (event.key.toLowerCase() === "d") {
+          window.location.href = "slide13.html";
+        }
+        if (event.key.toLowerCase() === "a") {
+          window.location.href = "slide11.html";
+        }
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="mn">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Slide 11 - Thread бүтэц</title>
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #0d0d0d, #1c1c1c, #3a3a3a);
+        color: #fff;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        overflow: hidden;
+      }
+
+      h1 {
+        font-size: 3em;
+        margin-bottom: 20px;
+        text-shadow: 0 0 15px rgba(255, 235, 59, 0.7);
+        animation: glow 2s infinite alternate;
+      }
+
+      @keyframes glow {
+        from {
+          text-shadow: 0 0 10px rgba(255, 235, 59, 0.6);
+        }
+        to {
+          text-shadow: 0 0 25px rgba(255, 235, 59, 1);
+        }
+      }
+
+      .content {
+        background: rgba(255, 255, 255, 0.05);
+        padding: 40px;
+        border-radius: 15px;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
+        max-width: 95vw;
+        width: 1000px;
+        text-align: center;
+        animation: fadeIn 1.5s ease;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .structure-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+        margin-top: 30px;
+      }
+
+      .structure-card {
+        background: rgba(255, 152, 0, 0.2);
+        border: 3px solid #ff9800;
+        padding: 25px;
+        border-radius: 12px;
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
+        transition: all 0.3s ease;
+      }
+
+      .structure-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 10px 30px rgba(255, 152, 0, 0.8);
+      }
+
+      .structure-card h3 {
+        color: #ff9800;
+        font-size: 1.6em;
+        margin-bottom: 15px;
+      }
+
+      .structure-card p {
+        font-size: 1.1em;
+        line-height: 1.6;
+        color: #ddd;
+      }
+
+      .shared-note {
+        margin-top: 40px;
+        padding: 25px;
+        background: rgba(76, 175, 80, 0.2);
+        border: 3px solid #4caf50;
+        border-radius: 12px;
+        font-size: 1.3em;
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
+      }
+
+      .highlight {
+        color: #ffeb3b;
+        font-weight: bold;
+      }
+
+      .hint {
+        margin-top: 30px;
+        font-size: 1em;
+        color: #bbbbbb;
+        font-style: italic;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Thread бүтэц</h1>
+    <div class="content">
+      <div class="structure-grid">
+        <div class="structure-card">
+          <h3>🎯 Program Counter</h3>
+          <p>Одоо гүйцэтгэж буй команд</p>
+        </div>
+
+        <div class="structure-card">
+          <h3>🎛️ Register Set</h3>
+          <p>Thread-ын өөрийн регистрүүд</p>
+        </div>
+
+        <div class="structure-card">
+          <h3>📚 Stack</h3>
+          <p>Thread-ын тусдаа Stack</p>
+        </div>
+
+        <div class="structure-card">
+          <h3>💾 Shared Memory</h3>
+          <p>Heap, Code хуваалцана</p>
+        </div>
+      </div>
+
+      <div class="shared-note">
+        💡 Thread-үүд <span class="highlight">Heap болон Code</span>-г
+        хуваалцдаг учраас бие биетэйгээ хурдан харилцана!
+      </div>
+    </div>
+
+    <div class="hint">
+      💡 'D' → дараагийн слайд | 'A' → өмнөх слайд руу буцах
+    </div>
+
+    <script>
+      document.addEventListener("keydown", function (event) {
+        if (event.key.toLowerCase() === "d") {
+          window.location.href = "slide12.html";
+        }
+        if (event.key.toLowerCase() === "a") {
+          window.location.href = "slide10.html";
+        }
+      });
+    </script>
+  </body>
+</html>

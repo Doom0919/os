@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="mn">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Slide 14 - Санах ойн ялгаа</title>
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #0d0d0d, #1c1c1c, #3a3a3a);
+        color: #fff;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        overflow: hidden;
+      }
+
+      h1 {
+        font-size: 3em;
+        margin-bottom: 20px;
+        text-shadow: 0 0 15px rgba(255, 235, 59, 0.7);
+        animation: glow 2s infinite alternate;
+      }
+
+      @keyframes glow {
+        from {
+          text-shadow: 0 0 10px rgba(255, 235, 59, 0.6);
+        }
+        to {
+          text-shadow: 0 0 25px rgba(255, 235, 59, 1);
+        }
+      }
+
+      .content {
+        background: rgba(255, 255, 255, 0.05);
+        padding: 40px;
+        border-radius: 15px;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
+        max-width: 95vw;
+        width: 1000px;
+        text-align: center;
+        animation: fadeIn 1.5s ease;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .comparison {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 30px;
+        margin-top: 30px;
+      }
+
+      .column {
+        background: rgba(255, 255, 255, 0.03);
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
+      }
+
+      .column h2 {
+        font-size: 2em;
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+        border-bottom: 3px solid;
+      }
+
+      .column.process h2 {
+        color: #2196f3;
+        border-color: #2196f3;
+      }
+
+      .column.thread h2 {
+        color: #ff9800;
+        border-color: #ff9800;
+      }
+
+      .memory-item {
+        background: rgba(255, 255, 255, 0.05);
+        padding: 20px;
+        margin: 15px 0;
+        border-radius: 10px;
+        text-align: left;
+        font-size: 1.1em;
+        line-height: 1.6;
+        box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
+      }
+
+      .memory-item strong {
+        color: #ffeb3b;
+        font-size: 1.2em;
+      }
+
+      .column.process .memory-item {
+        border-left: 5px solid #2196f3;
+      }
+
+      .column.thread .memory-item {
+        border-left: 5px solid #ff9800;
+      }
+
+      .hint {
+        margin-top: 30px;
+        font-size: 1em;
+        color: #bbbbbb;
+        font-style: italic;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Санах ойн ялгаа</h1>
+    <div class="content">
+      <div class="comparison">
+        <div class="column process">
+          <h2>🔷 Процесс</h2>
+          <div class="memory-item"><strong>Heap:</strong> Тусдаа</div>
+          <div class="memory-item"><strong>Stack:</strong> Тусдаа</div>
+          <div class="memory-item"><strong>Code:</strong> Тусдаа</div>
+          <div class="memory-item"><strong>Data:</strong> Тусдаа</div>
+        </div>
+
+        <div class="column thread">
+          <h2>🔶 Thread</h2>
+          <div class="memory-item"><strong>Heap:</strong> Хуваалцдаг ✅</div>
+          <div class="memory-item"><strong>Stack:</strong> Тусдаа</div>
+          <div class="memory-item"><strong>Code:</strong> Хуваалцдаг ✅</div>
+          <div class="memory-item"><strong>Data:</strong> Хуваалцдаг ✅</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hint">
+      💡 'D' → дараагийн слайд | 'A' → өмнөх слайд руу буцах
+    </div>
+
+    <script>
+      document.addEventListener("keydown", function (event) {
+        if (event.key.toLowerCase() === "d") {
+          window.location.href = "slide15.html";
+        }
+        if (event.key.toLowerCase() === "a") {
+          window.location.href = "slide13.html";
+        }
+      });
+    </script>
+  </body>
+</html>
