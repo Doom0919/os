@@ -2,7 +2,7 @@
 <html lang="mn">
   <head>
     <meta charset="UTF-8" />
-    <title>Slide 1 - Танилцуулга</title>
+    <title>Slide 3 - Процесс гэж юу вэ?</title>
     <style>
       * {
         box-sizing: border-box;
@@ -29,7 +29,6 @@
         text-shadow: 0 0 15px rgba(255, 235, 59, 0.7);
         animation: glow 2s infinite alternate;
       }
-
       @keyframes glow {
         from {
           text-shadow: 0 0 10px rgba(255, 235, 59, 0.6);
@@ -41,13 +40,16 @@
 
       .content {
         background: rgba(255, 255, 255, 0.05);
-        padding: 40px;
+        padding: 30px;
         border-radius: 15px;
         box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
-        max-width: 95vw;
-        width: 1000px;
-        text-align: center;
+        max-width: 1000px;
+        text-align: left;
         animation: fadeIn 1.5s ease;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
       }
 
       @keyframes fadeIn {
@@ -61,11 +63,12 @@
         }
       }
 
-      .intro-text {
-        font-size: 1.5em;
+      .content ul {
+        font-size: 1.3em;
         line-height: 1.8;
-        margin-bottom: 40px;
-        color: #ddd;
+        margin: 20px 0;
+        list-style: "✔ ";
+        margin-left: 40px;
       }
 
       .highlight {
@@ -73,45 +76,15 @@
         font-weight: bold;
       }
 
-      .cards-container {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 25px;
+      .simulation {
         margin-top: 30px;
+        text-align: center;
       }
 
-      .card {
-        background: rgba(33, 150, 243, 0.2);
-        border: 3px solid #2196f3;
-        padding: 30px;
-        border-radius: 12px;
-        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
-        transition: all 0.3s ease;
-      }
-
-      .card:hover {
-        transform: translateY(-8px);
-        box-shadow: 0 10px 30px rgba(33, 150, 243, 0.8);
-      }
-
-      .card h2 {
-        color: #2196f3;
-        font-size: 2em;
-        margin-bottom: 15px;
-      }
-
-      .card p {
-        font-size: 1.2em;
-        line-height: 1.6;
-      }
-
-      .bottom-note {
-        margin-top: 40px;
-        padding: 20px;
-        background: rgba(76, 175, 80, 0.2);
-        border-left: 4px solid #4caf50;
-        border-radius: 8px;
-        font-size: 1.2em;
+      .simulation img {
+        width: 80%;
+        border-radius: 15px;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
       }
 
       .hint {
@@ -119,31 +92,28 @@
         font-size: 1em;
         color: #bbbbbb;
         font-style: italic;
+        text-align: center;
       }
     </style>
   </head>
   <body>
-    <h1>Процесс ба Thread танилцуулга</h1>
+    <h1>Процесс гэж юу вэ?</h1>
     <div class="content">
-      <div class="intro-text">
-        Компьютер олон ажил зэрэг хийхдээ
-        <span class="highlight">процесс ба thread</span> ашиглана
-      </div>
-
-      <div class="cards-container">
-        <div class="card">
-          <h2>📦 Процесс</h2>
-          <p>Бие даасан програм</p>
-        </div>
-
-        <div class="card">
-          <h2>⚡ Thread</h2>
-          <p>Процесс доторх гүйцэтгэгч урсгал</p>
-        </div>
-      </div>
-
-      <div class="bottom-note">
-        💡 Эдгээр нь OS-ийн <span class="highlight">concurrency</span>-ийн үндэс
+      <ul>
+        <li>
+          <span class="highlight">Санах ойд ачаалагдсан</span>, бие даан ажиллаж
+          буй ажил
+        </li>
+        <li>
+          <span class="highlight">Өөрийн гэсэн memory space</span>,
+          resources-тай
+        </li>
+        <li>
+          OS процесс бүрт <span class="highlight">PID (Process ID)</span> өгдөг
+        </li>
+      </ul>
+      <div class="simulation">
+        <img src="./Image/process.png" alt="Process Diagram" />
       </div>
     </div>
 
@@ -154,10 +124,10 @@
     <script>
       document.addEventListener("keydown", function (event) {
         if (event.key.toLowerCase() === "d") {
-          window.location.href = "slide2.html";
+          window.location.href = "slide4.html"; // Next slide
         }
         if (event.key.toLowerCase() === "a") {
-          window.location.href = "intro.html";
+          window.location.href = "slide2.html"; // Previous slide
         }
       });
     </script>
