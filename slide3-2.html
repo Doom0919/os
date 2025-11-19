@@ -1,0 +1,592 @@
+<!doctype html>
+<html lang="mn">
+<head>
+  <meta charset="UTF-8" />
+  <title>Slide 2 - FCFS</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #0d0d0d, #1c1c1c, #3a3a3a);
+      color: #fff;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      overflow-x: hidden;
+    }
+
+    h1 {
+      font-size: 3.5em;
+      margin-bottom: 20px;
+      text-shadow: 0 0 15px rgba(76, 175, 80, 0.7);
+      animation: glow 2s infinite alternate;
+    }
+
+    @keyframes glow {
+      from {
+        text-shadow: 0 0 10px rgba(76, 175, 80, 0.6);
+      }
+      to {
+        text-shadow: 0 0 25px rgba(76, 175, 80, 1);
+      }
+    }
+
+    .slide-number {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      font-size: 1.2em;
+      color: #4caf50;
+      font-weight: bold;
+    }
+
+    .content {
+      background: rgba(255, 255, 255, 0.05);
+      padding: 40px;
+      border-radius: 15px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
+      max-width: 1200px;
+      width: 100%;
+      animation: fadeIn 1.5s ease;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .subtitle {
+      text-align: center;
+      font-size: 1.8em;
+      color: #4caf50;
+      margin-bottom: 30px;
+    }
+
+    .description {
+      font-size: 1.3em;
+      line-height: 1.8;
+      margin-bottom: 30px;
+      padding: 20px;
+      background: rgba(76, 175, 80, 0.1);
+      border-radius: 10px;
+      border-left: 5px solid #4caf50;
+    }
+
+    .highlight {
+      color: #ffeb3b;
+      font-weight: bold;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+      margin: 30px 0;
+    }
+
+    .feature-card {
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 10px;
+      border: 2px solid transparent;
+      transition: all 0.3s ease;
+    }
+
+    .feature-card:hover {
+      border-color: #4caf50;
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(76, 175, 80, 0.3);
+    }
+
+    .feature-card h3 {
+      color: #4caf50;
+      margin-bottom: 10px;
+      font-size: 1.4em;
+    }
+
+    .feature-card ul {
+      margin-left: 20px;
+    }
+
+    .feature-card li {
+      margin-bottom: 8px;
+      color: #e0e0e0;
+      line-height: 1.6;
+    }
+
+    .gantt-section {
+      margin: 40px 0;
+      padding: 30px;
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 12px;
+      border: 2px solid #4caf50;
+    }
+
+    .gantt-section h2 {
+      color: #ffeb3b;
+      font-size: 1.8em;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .controls {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-bottom: 30px;
+    }
+
+    .btn {
+      padding: 12px 25px;
+      font-size: 1.1em;
+      font-weight: bold;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      color: #fff;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(255, 255, 255, 0.3);
+    }
+
+    .btn-start {
+      background: #4caf50;
+    }
+
+    .btn-reset {
+      background: #f44336;
+    }
+
+    .btn-add {
+      background: #2196f3;
+    }
+
+    .btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .gantt-chart {
+      position: relative;
+      min-height: 250px;
+      margin: 30px 0;
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 8px;
+      padding: 20px;
+    }
+
+    .y-axis {
+      position: absolute;
+      left: 0;
+      top: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .process-label {
+      width: 60px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 1.1em;
+      color: #fff;
+      border-radius: 5px;
+    }
+
+    .gantt-bars {
+      margin-left: 80px;
+      position: relative;
+      min-height: 200px;
+    }
+
+    .gantt-row {
+      height: 40px;
+      position: relative;
+      margin-bottom: 15px;
+    }
+
+    .gantt-bar {
+      position: absolute;
+      height: 100%;
+      border-radius: 5px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      color: #fff;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+      opacity: 0;
+      transition: all 0.5s ease;
+    }
+
+    .gantt-bar.active {
+      opacity: 1;
+      animation: slideIn 0.5s ease;
+    }
+
+    @keyframes slideIn {
+      from {
+        transform: translateX(-50px);
+        opacity: 0;
+      }
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+
+    .gantt-bar.running {
+      animation: pulse 1s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% {
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+      }
+      50% {
+        box-shadow: 0 5px 20px rgba(255, 255, 255, 0.5);
+      }
+    }
+
+    .x-axis {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 10px;
+      margin-left: 80px;
+      font-size: 0.9em;
+      color: #bbbbbb;
+    }
+
+    .time-label {
+      width: 40px;
+      text-align: center;
+    }
+
+    .process-table {
+      width: 100%;
+      margin: 30px 0;
+      border-collapse: collapse;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .process-table thead {
+      background: #4682B4;
+    }
+
+    .process-table th {
+      padding: 15px;
+      text-align: center;
+      font-size: 1.1em;
+      font-weight: bold;
+    }
+
+    .process-table td {
+      padding: 12px;
+      text-align: center;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .process-table tbody tr {
+      transition: all 0.3s ease;
+    }
+
+    .process-table tbody tr:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .summary-row {
+      background: rgba(70, 130, 180, 0.3) !important;
+      font-weight: bold;
+    }
+
+    .summary-row td {
+      border-top: 2px solid #4682B4;
+    }
+
+    .navigation {
+      margin-top: 40px;
+      text-align: center;
+      font-size: 1.1em;
+      color: #bbbbbb;
+      font-style: italic;
+    }
+
+    .formula-box {
+      margin: 20px 0;
+      padding: 20px;
+      background: rgba(255, 235, 59, 0.1);
+      border-radius: 10px;
+      border-left: 4px solid #ffeb3b;
+    }
+
+    .formula-box h4 {
+      color: #ffeb3b;
+      margin-bottom: 10px;
+      font-size: 1.3em;
+    }
+
+    .formula-box p {
+      font-size: 1.1em;
+      line-height: 1.8;
+      color: #e0e0e0;
+    }
+
+    .status-text {
+      text-align: center;
+      font-size: 1.2em;
+      color: #ffeb3b;
+      margin-top: 20px;
+      min-height: 30px;
+    }
+  </style>
+</head>
+<body>
+  <div class="slide-number">Slide 2 / 6</div>
+  
+  <h1>FCFS - First Come First Served</h1>
+  
+  <div class="content">
+    <p class="subtitle">Эхний ирсэн эхнээс үйлчлүүлнэ</p>
+
+    <div class="description">
+      <strong>FCFS</strong> нь хамгийн <span class="highlight">энгийн</span> CPU scheduling алгоритм. 
+      Процессууд <span class="highlight">ирсэн дарааллаараа</span> CPU-д ажиллана. 
+      Яг л <span class="highlight">дэлгүүрийн дараалал</span> шиг ажилладаг!
+    </div>
+
+    <div class="features-grid">
+      <div class="feature-card">
+        <h3>✅ Давуу талууд</h3>
+        <ul>
+          <li>Хялбар, ойлгомжтой</li>
+          <li>Хэрэгжүүлэхэд энгийн</li>
+          <li>Шударга (First In First Out)</li>
+          <li>Starvation гарахгүй</li>
+        </ul>
+      </div>
+
+      <div class="feature-card">
+        <h3>❌ Сул талууд</h3>
+        <ul>
+          <li>Convoy Effect (урт процесс бусдыг хүлээлгэнэ)</li>
+          <li>Дундаж хүлээх хугацаа их</li>
+          <li>CPU ашиглалт муу байж болно</li>
+          <li>Interactive системд тохиромжгүй</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="gantt-section">
+      <h2>📊 FCFS Simulation - Gantt Chart</h2>
+      
+      <div class="controls">
+        <button class="btn btn-start" id="startBtn">▶️ Эхлүүлэх</button>
+        <button class="btn btn-reset" id="resetBtn">🔄 Дахин</button>
+        <button class="btn btn-add" id="addBtn">➕ Процесс нэмэх</button>
+      </div>
+
+      <div class="status-text" id="statusText"></div>
+      
+      <div class="gantt-chart" id="ganttChart">
+        <div class="y-axis" id="yAxis"></div>
+        <div class="gantt-bars" id="ganttBars"></div>
+      </div>
+
+      <div class="x-axis" id="xAxis"></div>
+
+      <table class="process-table" id="processTable">
+        <thead>
+          <tr>
+            <th>Процесс</th>
+            <th>Service Time (ms)</th>
+            <th>Waiting Time (ms)</th>
+            <th>Turnaround Time (ms)</th>
+          </tr>
+        </thead>
+        <tbody id="tableBody"></tbody>
+      </table>
+
+
+
+      <script>
+    const colors = ['#5C9BD5', '#E06C66', '#70AD47', '#F5A04D', '#9B59B6', '#E67E22', '#1ABC9C'];
+    
+    let processes = [
+      { name: 'A', serviceTime: 4, color: colors[0] },
+      { name: 'B', serviceTime: 5, color: colors[1] },
+      { name: 'C', serviceTime: 6, color: colors[2] },
+      { name: 'D', serviceTime: 2, color: colors[3] }
+    ];
+
+    let isAnimating = false;
+    let maxTime = 0;
+
+    function calculateSchedule() {
+      let currentTime = 0;
+      processes.forEach(p => {
+        p.waitingTime = currentTime;
+        p.startTime = currentTime;
+        p.endTime = currentTime + p.serviceTime;
+        p.turnaroundTime = p.endTime;
+        currentTime += p.serviceTime;
+      });
+      maxTime = currentTime;
+    }
+
+    function renderChart() {
+      const yAxis = document.getElementById('yAxis');
+      const ganttBars = document.getElementById('ganttBars');
+      const xAxis = document.getElementById('xAxis');
+      
+      yAxis.innerHTML = '';
+      ganttBars.innerHTML = '';
+      xAxis.innerHTML = '';
+
+      processes.forEach((p, i) => {
+        const label = document.createElement('div');
+        label.className = 'process-label';
+        label.style.background = p.color;
+        label.textContent = p.name;
+        yAxis.appendChild(label);
+
+        const row = document.createElement('div');
+        row.className = 'gantt-row';
+        row.id = `row-${i}`;
+        ganttBars.appendChild(row);
+      });
+
+      for (let i = 0; i <= maxTime; i++) {
+        const timeLabel = document.createElement('span');
+        timeLabel.className = 'time-label';
+        timeLabel.textContent = i;
+        xAxis.appendChild(timeLabel);
+      }
+    }
+
+    function renderTable() {
+      const tableBody = document.getElementById('tableBody');
+      tableBody.innerHTML = '';
+
+      let totalWait = 0;
+      let totalTurnaround = 0;
+
+      processes.forEach(p => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td><strong>${p.name}</strong></td>
+          <td>${p.serviceTime}</td>
+          <td>${p.waitingTime}</td>
+          <td>${p.turnaroundTime}</td>
+        `;
+        tableBody.appendChild(row);
+        totalWait += p.waitingTime;
+        totalTurnaround += p.turnaroundTime;
+      });
+
+      const avgRow = document.createElement('tr');
+      avgRow.className = 'summary-row';
+      avgRow.innerHTML = `
+        <td><strong>Дундаж</strong></td>
+        <td>-</td>
+        <td><strong>${(totalWait / processes.length).toFixed(2)}</strong></td>
+        <td><strong>${(totalTurnaround / processes.length).toFixed(2)}</strong></td>
+      `;
+      tableBody.appendChild(avgRow);
+    }
+
+    async function animate() {
+      if (isAnimating) return;
+      isAnimating = true;
+      document.getElementById('startBtn').disabled = true;
+
+      for (let i = 0; i < processes.length; i++) {
+        const p = processes[i];
+        const row = document.getElementById(`row-${i}`);
+        
+        document.getElementById('statusText').textContent = `⏳ ${p.name} процесс ажиллаж байна...`;
+
+        const bar = document.createElement('div');
+        bar.className = 'gantt-bar running';
+        bar.style.background = p.color;
+        bar.style.left = `${(p.startTime / maxTime) * 100}%`;
+        bar.style.width = `${(p.serviceTime / maxTime) * 100}%`;
+        bar.innerHTML = `${p.name}<br><small>${p.startTime}-${p.endTime}</small>`;
+        
+        row.appendChild(bar);
+        
+        setTimeout(() => bar.classList.add('active'), 50);
+        
+        await new Promise(resolve => setTimeout(resolve, p.serviceTime * 200));
+        
+        bar.classList.remove('running');
+      }
+
+      document.getElementById('statusText').textContent = '✅ Бүх процесс дууслаа!';
+      isAnimating = false;
+      document.getElementById('startBtn').disabled = false;
+    }
+
+    function reset() {
+      isAnimating = false;
+      document.getElementById('startBtn').disabled = false;
+      document.getElementById('statusText').textContent = '';
+      const rows = document.querySelectorAll('.gantt-row');
+      rows.forEach(row => row.innerHTML = '');
+    }
+
+    function addProcess() {
+      const names = ['E', 'F', 'G', 'H', 'I', 'J', 'K'];
+      const newName = names[processes.length - 4] || `P${processes.length + 1}`;
+      const serviceTime = Math.floor(Math.random() * 8) + 2;
+      const color = colors[processes.length % colors.length];
+      
+      processes.push({ name: newName, serviceTime, color });
+      
+      calculateSchedule();
+      renderChart();
+      renderTable();
+      reset();
+    }
+
+    document.getElementById('startBtn').addEventListener('click', animate);
+    document.getElementById('resetBtn').addEventListener('click', reset);
+    document.getElementById('addBtn').addEventListener('click', addProcess);
+
+    document.addEventListener("keydown", function (event) {
+      if (event.key.toLowerCase() === "d") {
+        window.location.href = "slide3-3.html";
+      }
+      if (event.key.toLowerCase() === "a") {
+        window.location.href = "slide3-1.html";
+      }
+    });
+
+    calculateSchedule();
+    renderChart();
+    renderTable();
+  </script>
+</body>
+</html>

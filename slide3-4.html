@@ -1,0 +1,662 @@
+<!doctype html>
+<html lang="mn">
+<head>
+  <meta charset="UTF-8" />
+  <title>Slide 4 - Round Robin</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #0d0d0d, #1c1c1c, #3a3a3a);
+      color: #fff;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      overflow-x: hidden;
+    }
+
+    h1 {
+      font-size: 3.5em;
+      margin-bottom: 20px;
+      text-shadow: 0 0 15px rgba(156, 39, 176, 0.7);
+      animation: glow 2s infinite alternate;
+    }
+
+    @keyframes glow {
+      from {
+        text-shadow: 0 0 10px rgba(156, 39, 176, 0.6);
+      }
+      to {
+        text-shadow: 0 0 25px rgba(156, 39, 176, 1);
+      }
+    }
+
+    .slide-number {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      font-size: 1.2em;
+      color: #9c27b0;
+      font-weight: bold;
+    }
+
+    .content {
+      background: rgba(255, 255, 255, 0.05);
+      padding: 40px;
+      border-radius: 15px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
+      max-width: 1200px;
+      width: 100%;
+      animation: fadeIn 1.5s ease;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .subtitle {
+      text-align: center;
+      font-size: 1.8em;
+      color: #9c27b0;
+      margin-bottom: 30px;
+    }
+
+    .description {
+      font-size: 1.3em;
+      line-height: 1.8;
+      margin-bottom: 30px;
+      padding: 20px;
+      background: rgba(156, 39, 176, 0.1);
+      border-radius: 10px;
+      border-left: 5px solid #9c27b0;
+    }
+
+    .highlight {
+      color: #ffeb3b;
+      font-weight: bold;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+      margin: 30px 0;
+    }
+
+    .feature-card {
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 10px;
+      border: 2px solid transparent;
+      transition: all 0.3s ease;
+    }
+
+    .feature-card:hover {
+      border-color: #9c27b0;
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(156, 39, 176, 0.3);
+    }
+
+    .feature-card h3 {
+      color: #9c27b0;
+      margin-bottom: 10px;
+      font-size: 1.4em;
+    }
+
+    .feature-card ul {
+      margin-left: 20px;
+    }
+
+    .feature-card li {
+      margin-bottom: 8px;
+      color: #e0e0e0;
+      line-height: 1.6;
+    }
+
+    .gantt-section {
+      margin: 40px 0;
+      padding: 30px;
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 12px;
+      border: 2px solid #9c27b0;
+    }
+
+    .gantt-section h2 {
+      color: #ffeb3b;
+      font-size: 1.8em;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .controls {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-bottom: 30px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: 12px 25px;
+      font-size: 1.1em;
+      font-weight: bold;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      color: #fff;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(255, 255, 255, 0.3);
+    }
+
+    .btn-start {
+      background: #9c27b0;
+    }
+
+    .btn-reset {
+      background: #f44336;
+    }
+
+    .btn-add {
+      background: #4caf50;
+    }
+
+    .btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .quantum-control {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .quantum-control input {
+      width: 60px;
+      padding: 8px;
+      font-size: 1em;
+      border-radius: 5px;
+      border: 2px solid #9c27b0;
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+      text-align: center;
+    }
+
+    .gantt-chart {
+      position: relative;
+      min-height: 250px;
+      margin: 30px 0;
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 8px;
+      padding: 20px;
+    }
+
+    .y-axis {
+      position: absolute;
+      left: 0;
+      top: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .process-label {
+      width: 60px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 1.1em;
+      color: #fff;
+      border-radius: 5px;
+    }
+
+    .gantt-bars {
+      margin-left: 80px;
+      position: relative;
+      min-height: 200px;
+    }
+
+    .gantt-row {
+      height: 40px;
+      position: relative;
+      margin-bottom: 15px;
+    }
+
+    .gantt-bar {
+      position: absolute;
+      height: 100%;
+      border-radius: 5px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 0.9em;
+      color: #fff;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+      opacity: 0;
+      transition: all 0.3s ease;
+    }
+
+    .gantt-bar.active {
+      opacity: 1;
+      animation: slideIn 0.3s ease;
+    }
+
+    @keyframes slideIn {
+      from {
+        transform: translateX(-20px);
+        opacity: 0;
+      }
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+
+    .gantt-bar.running {
+      animation: pulse 0.8s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% {
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+      }
+      50% {
+        box-shadow: 0 5px 20px rgba(156, 39, 176, 0.8);
+      }
+    }
+
+    .x-axis {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 10px;
+      margin-left: 80px;
+      font-size: 0.9em;
+      color: #bbbbbb;
+    }
+
+    .time-label {
+      width: 30px;
+      text-align: center;
+    }
+
+    .process-table {
+      width: 100%;
+      margin: 30px 0;
+      border-collapse: collapse;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .process-table thead {
+      background: #4682B4;
+    }
+
+    .process-table th {
+      padding: 15px;
+      text-align: center;
+      font-size: 1.1em;
+      font-weight: bold;
+    }
+
+    .process-table td {
+      padding: 12px;
+      text-align: center;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .process-table tbody tr {
+      transition: all 0.3s ease;
+    }
+
+    .process-table tbody tr:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .summary-row {
+      background: rgba(70, 130, 180, 0.3) !important;
+      font-weight: bold;
+    }
+
+    .summary-row td {
+      border-top: 2px solid #4682B4;
+    }
+
+    .navigation {
+      margin-top: 40px;
+      text-align: center;
+      font-size: 1.1em;
+      color: #bbbbbb;
+      font-style: italic;
+    }
+
+    .formula-box {
+      margin: 20px 0;
+      padding: 20px;
+      background: rgba(255, 235, 59, 0.1);
+      border-radius: 10px;
+      border-left: 4px solid #ffeb3b;
+    }
+
+    .formula-box h4 {
+      color: #ffeb3b;
+      margin-bottom: 10px;
+      font-size: 1.3em;
+    }
+
+    .formula-box p {
+      font-size: 1.1em;
+      line-height: 1.8;
+      color: #e0e0e0;
+    }
+
+    .status-text {
+      text-align: center;
+      font-size: 1.2em;
+      color: #ffeb3b;
+      margin-top: 20px;
+      min-height: 30px;
+    }
+  </style>
+</head>
+<body>
+  <div class="slide-number">Slide 4 / 6</div>
+  
+  <h1>Round Robin (RR)</h1>
+  
+  <div class="content">
+    <p class="subtitle">Тойрог тойргоор - Time Sharing</p>
+
+    <div class="description">
+      <strong>Round Robin</strong> нь процесс бүрт <span class="highlight">тогтмол хугацаа (time quantum)</span> өгч, 
+      тэр хугацаа дуусмагц дараагийн процесс руу шилжинэ. 
+      Энэ нь <span class="highlight">хамгийн шударга</span> алгоритм бөгөөд <span class="highlight">time-sharing системд</span> өргөн хэрэглэгддэг!
+    </div>
+
+    <div class="features-grid">
+      <div class="feature-card">
+        <h3>✅ Давуу талууд</h3>
+        <ul>
+          <li>Шударга - бүх процесс CPU цаг авна</li>
+          <li>Response time сайн</li>
+          <li>Starvation гарахгүй</li>
+          <li>Time-sharing системд тохиромжтой</li>
+        </ul>
+      </div>
+
+      <div class="feature-card">
+        <h3>❌ Сул талууд</h3>
+        <ul>
+          <li>Context switching их</li>
+          <li>Overhead өндөр</li>
+          <li>Average turnaround time өндөр</li>
+          <li>Time quantum сонголт хэцүү</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="gantt-section">
+      <h2>📊 Round Robin Simulation</h2>
+      
+      <div class="controls">
+        <div class="quantum-control">
+          <label style="color: #ffeb3b; font-weight: bold;">Time Quantum:</label>
+          <input type="number" id="quantumInput" value="4" min="1" max="10">
+          <span style="color: #9c27b0;">ms</span>
+        </div>
+        <button class="btn btn-start" id="startBtn">▶️ Эхлүүлэх</button>
+        <button class="btn btn-reset" id="resetBtn">🔄 Дахин</button>
+        <button class="btn btn-add" id="addBtn">➕ Процесс нэмэх</button>
+      </div>
+
+      <div class="status-text" id="statusText"></div>
+      
+      <div class="gantt-chart" id="ganttChart">
+        <div class="y-axis" id="yAxis"></div>
+        <div class="gantt-bars" id="ganttBars"></div>
+      </div>
+
+      <div class="x-axis" id="xAxis"></div>
+
+      <table class="process-table" id="processTable">
+        <thead>
+          <tr>
+            <th>Процесс</th>
+            <th>Service Time (ms)</th>
+            <th>Waiting Time (ms)</th>
+            <th>Turnaround Time (ms)</th>
+          </tr>
+        </thead>
+        <tbody id="tableBody"></tbody>
+      </table>
+
+  </div>
+
+  <script>
+    const colors = ['#5C9BD5', '#E06C66', '#70AD47', '#F5A04D', '#9B59B6', '#E67E22', '#1ABC9C'];
+    
+    let processes = [
+      { name: 'A', serviceTime: 10, remaining: 10, color: colors[0] },
+      { name: 'B', serviceTime: 4, remaining: 4, color: colors[1] },
+      { name: 'C', serviceTime: 6, remaining: 6, color: colors[2] },
+      { name: 'D', serviceTime: 8, remaining: 8, color: colors[3] }
+    ];
+
+    let isAnimating = false;
+    let timeQuantum = 4;
+    let schedule = [];
+    let maxTime = 0;
+
+    function calculateSchedule() {
+      timeQuantum = parseInt(document.getElementById('quantumInput').value) || 4;
+      schedule = [];
+      let queue = [...processes];
+      let currentTime = 0;
+      
+      queue.forEach(p => {
+        p.remaining = p.serviceTime;
+        p.waitingTime = 0;
+        p.firstResponse = -1;
+      });
+
+      while (queue.some(p => p.remaining > 0)) {
+        for (let i = 0; i < queue.length; i++) {
+          const p = queue[i];
+          if (p.remaining > 0) {
+            if (p.firstResponse === -1) {
+              p.firstResponse = currentTime;
+            }
+            
+            const execTime = Math.min(timeQuantum, p.remaining);
+            schedule.push({
+              process: p.name,
+              color: p.color,
+              start: currentTime,
+              duration: execTime
+            });
+            
+            p.remaining -= execTime;
+            currentTime += execTime;
+          }
+        }
+      }
+
+      queue.forEach(p => {
+        p.turnaroundTime = currentTime;
+        for (let item of schedule) {
+          if (item.process === p.name) {
+            p.turnaroundTime = item.start + item.duration;
+          }
+        }
+        p.waitingTime = p.turnaroundTime - p.serviceTime;
+      });
+
+      maxTime = currentTime;
+    }
+
+    function renderChart() {
+      const yAxis = document.getElementById('yAxis');
+      const ganttBars = document.getElementById('ganttBars');
+      const xAxis = document.getElementById('xAxis');
+      
+      yAxis.innerHTML = '';
+      ganttBars.innerHTML = '';
+      xAxis.innerHTML = '';
+
+      processes.forEach((p, i) => {
+        const label = document.createElement('div');
+        label.className = 'process-label';
+        label.style.background = p.color;
+        label.textContent = p.name;
+        yAxis.appendChild(label);
+
+        const row = document.createElement('div');
+        row.className = 'gantt-row';
+        row.id = `row-${i}`;
+        ganttBars.appendChild(row);
+      });
+
+      for (let i = 0; i <= maxTime; i++) {
+        if (i % 2 === 0 || i === maxTime) {
+          const timeLabel = document.createElement('span');
+          timeLabel.className = 'time-label';
+          timeLabel.textContent = i;
+          xAxis.appendChild(timeLabel);
+        }
+      }
+    }
+
+    function renderTable() {
+      const tableBody = document.getElementById('tableBody');
+      tableBody.innerHTML = '';
+
+      let totalWait = 0;
+      let totalTurnaround = 0;
+
+      processes.forEach(p => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td><strong>${p.name}</strong></td>
+          <td>${p.serviceTime}</td>
+          <td>${p.waitingTime}</td>
+          <td>${p.turnaroundTime}</td>
+        `;
+        tableBody.appendChild(row);
+        totalWait += p.waitingTime;
+        totalTurnaround += p.turnaroundTime;
+      });
+
+      const avgRow = document.createElement('tr');
+      avgRow.className = 'summary-row';
+      avgRow.innerHTML = `
+        <td><strong>Дундаж</strong></td>
+        <td>-</td>
+        <td><strong>${(totalWait / processes.length).toFixed(2)}</strong></td>
+        <td><strong>${(totalTurnaround / processes.length).toFixed(2)}</strong></td>
+      `;
+      tableBody.appendChild(avgRow);
+    }
+
+    async function animate() {
+      if (isAnimating) return;
+      isAnimating = true;
+      document.getElementById('startBtn').disabled = true;
+
+      for (let i = 0; i < schedule.length; i++) {
+        const item = schedule[i];
+        const processIndex = processes.findIndex(p => p.name === item.process);
+        const row = document.getElementById(`row-${processIndex}`);
+        
+        document.getElementById('statusText').textContent = `⏳ ${item.process} процесс (${item.duration}ms) ажиллаж байна...`;
+
+        const bar = document.createElement('div');
+        bar.className = 'gantt-bar running';
+        bar.style.background = item.color;
+        bar.style.left = `${(item.start / maxTime) * 100}%`;
+        bar.style.width = `${(item.duration / maxTime) * 100}%`;
+        bar.innerHTML = `${item.process}`;
+        
+        row.appendChild(bar);
+        
+        setTimeout(() => bar.classList.add('active'), 50);
+        
+        await new Promise(resolve => setTimeout(resolve, item.duration * 150));
+        
+        bar.classList.remove('running');
+      }
+
+      document.getElementById('statusText').textContent = '✅ Бүх процесс дууслаа!';
+      isAnimating = false;
+      document.getElementById('startBtn').disabled = false;
+    }
+
+    function reset() {
+      isAnimating = false;
+      document.getElementById('startBtn').disabled = false;
+      document.getElementById('statusText').textContent = '';
+      const rows = document.querySelectorAll('.gantt-row');
+      rows.forEach(row => row.innerHTML = '');
+    }
+
+    function addProcess() {
+      const names = ['E', 'F', 'G', 'H', 'I', 'J', 'K'];
+      const newName = names[processes.length - 4] || `P${processes.length + 1}`;
+      const serviceTime = Math.floor(Math.random() * 10) + 3;
+      const color = colors[processes.length % colors.length];
+      
+      processes.push({ name: newName, serviceTime, remaining: serviceTime, color });
+      
+      calculateSchedule();
+      renderChart();
+      renderTable();
+      reset();
+    }
+
+    document.getElementById('startBtn').addEventListener('click', animate);
+    document.getElementById('resetBtn').addEventListener('click', reset);
+    document.getElementById('addBtn').addEventListener('click', addProcess);
+    document.getElementById('quantumInput').addEventListener('change', () => {
+      calculateSchedule();
+      renderChart();
+      renderTable();
+      reset();
+    });
+
+    document.addEventListener("keydown", function (event) {
+      if (event.key.toLowerCase() === "d") {
+        window.location.href = "slide3-5.html";
+      }
+      if (event.key.toLowerCase() === "a") {
+        window.location.href = "slide3-3.html";
+      }
+    });
+
+    calculateSchedule();
+    renderChart();
+    renderTable();
+  </script>
+</body>
+</html>

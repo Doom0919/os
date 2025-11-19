@@ -1,0 +1,394 @@
+<!doctype html>
+<html lang="mn">
+<head>
+  <meta charset="UTF-8" />
+  <title>Slide 6 - Summary</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #0d0d0d, #1c1c1c, #3a3a3a);
+      color: #fff;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      overflow-x: hidden;
+    }
+
+    h1 {
+      font-size: 3.5em;
+      margin-bottom: 20px;
+      text-shadow: 0 0 15px rgba(255, 235, 59, 0.7);
+      animation: glow 2s infinite alternate;
+    }
+
+    @keyframes glow {
+      from {
+        text-shadow: 0 0 10px rgba(255, 235, 59, 0.6);
+      }
+      to {
+        text-shadow: 0 0 25px rgba(255, 235, 59, 1);
+      }
+    }
+
+    .slide-number {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      font-size: 1.2em;
+      color: #ffeb3b;
+      font-weight: bold;
+    }
+
+    .content {
+      background: rgba(255, 255, 255, 0.05);
+      padding: 40px;
+      border-radius: 15px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
+      max-width: 1400px;
+      width: 100%;
+      animation: fadeIn 1.5s ease;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .subtitle {
+      text-align: center;
+      font-size: 1.8em;
+      color: #ffeb3b;
+      margin-bottom: 40px;
+    }
+
+    .comparison-table {
+      width: 100%;
+      margin: 30px 0;
+      border-collapse: collapse;
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+    }
+
+    .comparison-table thead {
+      background: linear-gradient(135deg, #2196f3, #1976d2);
+    }
+
+    .comparison-table th {
+      padding: 18px;
+      text-align: left;
+      font-size: 1.2em;
+      font-weight: bold;
+    }
+
+    .comparison-table td {
+      padding: 15px 18px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      font-size: 1.05em;
+    }
+
+    .comparison-table tbody tr {
+      transition: all 0.3s ease;
+    }
+
+    .comparison-table tbody tr:hover {
+      background: rgba(255, 235, 59, 0.1);
+      transform: scale(1.01);
+    }
+
+    .algo-name {
+      font-weight: bold;
+      font-size: 1.2em;
+      color: #ffeb3b;
+    }
+
+    .fcfs-row { border-left: 4px solid #4caf50; }
+    .sjf-row { border-left: 4px solid #2196f3; }
+    .rr-row { border-left: 4px solid #9c27b0; }
+    .priority-row { border-left: 4px solid #ff9800; }
+
+    .pros { color: #4caf50; }
+    .cons { color: #f44336; }
+    .neutral { color: #ffeb3b; }
+
+    .key-points {
+      margin: 40px 0;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 25px;
+    }
+
+    .point-card {
+      padding: 25px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      border: 2px solid;
+      transition: all 0.3s ease;
+    }
+
+    .point-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 30px rgba(255, 255, 255, 0.2);
+    }
+
+    .point-card.best {
+      border-color: #4caf50;
+      background: rgba(76, 175, 80, 0.1);
+    }
+
+    .point-card.worst {
+      border-color: #f44336;
+      background: rgba(244, 67, 54, 0.1);
+    }
+
+    .point-card.balanced {
+      border-color: #2196f3;
+      background: rgba(33, 150, 243, 0.1);
+    }
+
+    .point-card.flexible {
+      border-color: #ff9800;
+      background: rgba(255, 152, 0, 0.1);
+    }
+
+    .point-card h3 {
+      font-size: 1.6em;
+      margin-bottom: 15px;
+    }
+
+    .point-card.best h3 { color: #4caf50; }
+    .point-card.worst h3 { color: #f44336; }
+    .point-card.balanced h3 { color: #2196f3; }
+    .point-card.flexible h3 { color: #ff9800; }
+
+    .point-card p {
+      font-size: 1.1em;
+      line-height: 1.8;
+      color: #e0e0e0;
+    }
+
+    .recommendations {
+      margin: 40px 0;
+      padding: 30px;
+      background: linear-gradient(135deg, rgba(255, 235, 59, 0.1), rgba(255, 152, 0, 0.1));
+      border-radius: 12px;
+      border: 3px solid #ffeb3b;
+    }
+
+    .recommendations h2 {
+      color: #ffeb3b;
+      font-size: 2em;
+      margin-bottom: 25px;
+      text-align: center;
+    }
+
+    .recommendation-item {
+      padding: 15px;
+      margin: 15px 0;
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 8px;
+      border-left: 5px solid;
+      transition: all 0.3s ease;
+    }
+
+    .recommendation-item:hover {
+      transform: translateX(10px);
+      box-shadow: 0 5px 15px rgba(255, 255, 255, 0.2);
+    }
+
+    .recommendation-item h4 {
+      font-size: 1.3em;
+      margin-bottom: 8px;
+    }
+
+    .recommendation-item p {
+      font-size: 1.05em;
+      color: #e0e0e0;
+      line-height: 1.6;
+    }
+
+    .rec-batch { border-color: #4caf50; }
+    .rec-interactive { border-color: #9c27b0; }
+    .rec-realtime { border-color: #ff9800; }
+    .rec-general { border-color: #2196f3; }
+
+    .rec-batch h4 { color: #4caf50; }
+    .rec-interactive h4 { color: #9c27b0; }
+    .rec-realtime h4 { color: #ff9800; }
+    .rec-general h4 { color: #2196f3; }
+
+    .conclusion {
+      margin-top: 40px;
+      padding: 30px;
+      background: rgba(33, 150, 243, 0.1);
+      border-radius: 12px;
+      border: 2px solid #2196f3;
+      text-align: center;
+    }
+
+    .conclusion h2 {
+      color: #2196f3;
+      font-size: 2em;
+      margin-bottom: 20px;
+    }
+
+    .conclusion p {
+      font-size: 1.3em;
+      line-height: 2;
+      color: #e0e0e0;
+    }
+
+    .highlight {
+      color: #ffeb3b;
+      font-weight: bold;
+    }
+
+    .navigation {
+      margin-top: 40px;
+      text-align: center;
+      font-size: 1.1em;
+      color: #bbbbbb;
+      font-style: italic;
+    }
+  </style>
+</head>
+<body>
+ 
+  <h1>Харьцуулалт ба Дүгнэлт</h1>
+  
+  <div class="content">
+    <p class="subtitle">CPU Scheduling Algorithms - Ерөнхий үнэлгээ</p>
+
+    <table class="comparison-table">
+      <thead>
+        <tr>
+          <th>Алгоритм</th>
+          <th>Preemptive</th>
+          <th>Avg Wait Time</th>
+          <th>Response Time</th>
+          <th>Starvation</th>
+          <th>Хэрэглээ</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="fcfs-row">
+          <td class="algo-name">FCFS</td>
+          <td class="cons">Үгүй</td>
+          <td class="cons">Муу (Convoy Effect)</td>
+          <td class="cons">Муу</td>
+          <td class="pros">Үгүй</td>
+          <td>Batch Systems</td>
+        </tr>
+        <tr class="sjf-row">
+          <td class="algo-name">SJF</td>
+          <td class="neutral">Хоёр төрөл</td>
+          <td class="pros">Хамгийн сайн (Optimal)</td>
+          <td class="neutral">Дундаж</td>
+          <td class="cons">Тийм (урт процесс)</td>
+          <td>Batch Processing</td>
+        </tr>
+        <tr class="rr-row">
+          <td class="algo-name">Round Robin</td>
+          <td class="pros">Тийм</td>
+          <td class="neutral">Дундаж</td>
+          <td class="pros">Маш сайн</td>
+          <td class="pros">Үгүй</td>
+          <td>Time-Sharing Systems</td>
+        </tr>
+        <tr class="priority-row">
+          <td class="algo-name">Priority</td>
+          <td class="neutral">Хоёр төрөл</td>
+          <td class="neutral">Давуу эрхээс хамаарна</td>
+          <td class="pros">Чухал процессд сайн</td>
+          <td class="cons">Тийм (Aging-ээр шийднэ)</td>
+          <td>Real-time Systems</td>
+        </tr>
+      </tbody>
+    </table>
+
+    
+
+    <div class="recommendations">
+      <h2>💡 Сонголтын зөвлөмж</h2>
+
+      <div class="recommendation-item rec-batch">
+        <h4>🔹 Batch Processing Systems</h4>
+        <p>
+          <strong>Санал:</strong> SJF эсвэл FCFS. Interactive биш, throughput чухал бол SJF сонгох.
+        </p>
+      </div>
+
+      <div class="recommendation-item rec-interactive">
+        <h4>🔹 Interactive / Time-Sharing Systems</h4>
+        <p>
+          <strong>Санал:</strong> Round Robin. Response time чухал, олон хэрэглэгч нэгэн зэрэг ажиллах бол RR хамгийн тохиромжтой.
+        </p>
+      </div>
+
+      <div class="recommendation-item rec-realtime">
+        <h4>🔹 Real-time Systems</h4>
+        <p>
+          <strong>Санал:</strong> Priority Scheduling (Preemptive). Чухал процессууд deadline-аа алдахгүй байх ёстой.
+        </p>
+      </div>
+
+      <div class="recommendation-item rec-general">
+        <h4>🔹 General Purpose Operating Systems</h4>
+        <p>
+          <strong>Санал:</strong> Multilevel Queue эсвэл Multilevel Feedback Queue. 
+          Олон төрлийн ажлуудыг хослуулан хэрэглэх нь хамгийн сайн!
+        </p>
+      </div>
+    </div>
+
+    <div class="conclusion">
+      <h2>🎓 Дүгнэлт</h2>
+      <p>
+        <span class="highlight">Төгс алгоритм байхгүй!</span> 
+        Алгоритм бүр өөрийн <span class="highlight">давуу ба сул талтай</span>.
+      </p>
+      <p style="margin-top: 20px;">
+        Системийн <span class="highlight">шаардлага, ашиглалт, зорилгоосоо</span> хамааруулан 
+        тохирох алгоритмыг сонгох хэрэгтэй. 
+      </p>
+      <p style="margin-top: 20px;">
+        Орчин үеийн үйлдлийн системүүд <span class="highlight">олон алгоритмыг хослуулан</span> 
+        ашигладаг (Multilevel Queue Scheduling).
+      </p>
+    </div>
+
+    <div class="navigation">
+      <p>🎯 CPU Scheduling - Operating System-ийн зүрх!</p>
+      <p style="margin-top: 15px;">⌨️ <strong>A</strong> - Өмнөх (Priority Scheduling)</p>
+      <p style="margin-top: 10px; color: #4caf50;">✅ Презентэйш дууслаа! Баярлалаа! 🎉</p>
+    </div>
+  </div>
+
+ <script>
+    document.addEventListener("keydown", function (event) {
+      if (event.key.toLowerCase() === "d") {
+        window.location.href = "slide6.html";
+      }
+      if (event.key.toLowerCase() === "a") {
+        window.location.href = "slide3-5.html";
+      }
+    });
+  </script>
+</body>
+</html>
