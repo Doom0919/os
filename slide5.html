@@ -2,7 +2,7 @@
 <html lang="mn">
   <head>
     <meta charset="UTF-8" />
-    <title>Slide 6 - Thread Lifecycle</title>
+    <title>Slide 5 - Процессын төлөвүүд</title>
     <style>
       * {
         box-sizing: border-box;
@@ -41,10 +41,11 @@
 
       .content {
         background: rgba(255, 255, 255, 0.05);
-        padding: 30px;
+        padding: 40px;
         border-radius: 15px;
         box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
-        max-width: 1100px;
+        max-width: 95vw;
+        width: 1000px;
         text-align: center;
         animation: fadeIn 1.5s ease;
       }
@@ -60,67 +61,49 @@
         }
       }
 
-      .content p {
-        font-size: 1.3em;
-        line-height: 1.6;
-        margin-bottom: 30px;
+      .states-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 20px;
+        margin-top: 30px;
       }
 
-      .highlight {
-        color: #ffeb3b;
-        font-weight: bold;
-      }
-
-      .lifecycle-diagram {
-        position: relative;
-        width: 100%;
-        height: 400px;
-        margin-top: 20px;
-      }
-
-      .state {
-        position: absolute;
-        background: #2196f3;
-        padding: 20px 30px;
+      .state-card {
+        background: rgba(33, 150, 243, 0.2);
+        border: 3px solid #2196f3;
+        padding: 30px;
         border-radius: 15px;
-        font-weight: bold;
+        min-width: 200px;
         box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
         transition: all 0.3s ease;
       }
 
-      .state:hover {
-        transform: scale(1.1);
-        box-shadow: 0 8px 25px rgba(33, 150, 243, 0.8);
+      .state-card:hover {
+        transform: translateY(-10px) scale(1.05);
+        box-shadow: 0 10px 30px rgba(33, 150, 243, 0.8);
       }
 
-      .state.new {
-        top: 20px;
-        left: 50%;
-        transform: translateX(-50%);
-        background: #4caf50;
+      .state-card.new {
+        border-color: #4caf50;
+        background: rgba(76, 175, 80, 0.2);
       }
-      .state.ready {
-        top: 140px;
-        left: 15%;
-        background: #ff9800;
+      .state-card.ready {
+        border-color: #ff9800;
+        background: rgba(255, 152, 0, 0.2);
       }
-      .state.running {
-        top: 140px;
-        left: 50%;
-        transform: translateX(-50%);
-        background: #f44336;
+      .state-card.running {
+        border-color: #f44336;
+        background: rgba(244, 67, 54, 0.2);
         animation: runningPulse 2s infinite;
       }
-      .state.waiting {
-        top: 140px;
-        right: 15%;
-        background: #9c27b0;
+      .state-card.waiting {
+        border-color: #9c27b0;
+        background: rgba(156, 39, 176, 0.2);
       }
-      .state.terminated {
-        bottom: 20px;
-        left: 50%;
-        transform: translateX(-50%);
-        background: #607d8b;
+      .state-card.terminated {
+        border-color: #607d8b;
+        background: rgba(96, 125, 139, 0.2);
       }
 
       @keyframes runningPulse {
@@ -129,86 +112,40 @@
           box-shadow: 0 6px 15px rgba(244, 67, 54, 0.5);
         }
         50% {
-          box-shadow: 0 8px 30px rgba(244, 67, 54, 1);
+          box-shadow: 0 10px 35px rgba(244, 67, 54, 1);
         }
       }
 
-      .arrow {
-        position: absolute;
-        font-size: 2em;
-        color: #ffeb3b;
-        animation: arrowMove 2s infinite ease-in-out;
+      .state-icon {
+        font-size: 3em;
+        margin-bottom: 10px;
       }
 
-      @keyframes arrowMove {
-        0%,
-        100% {
-          opacity: 0.6;
-        }
-        50% {
-          opacity: 1;
-          transform: scale(1.2);
-        }
+      .state-name {
+        font-size: 1.8em;
+        font-weight: bold;
+        margin-bottom: 10px;
       }
 
-      .arrow1 {
-        top: 80px;
-        left: 48%;
+      .state-card.new .state-name {
+        color: #4caf50;
       }
-      .arrow2 {
-        top: 160px;
-        left: 28%;
+      .state-card.ready .state-name {
+        color: #ff9800;
       }
-      .arrow3 {
-        top: 160px;
-        right: 28%;
+      .state-card.running .state-name {
+        color: #f44336;
       }
-      .arrow4 {
-        top: 180px;
-        left: 35%;
-        transform: rotate(180deg);
+      .state-card.waiting .state-name {
+        color: #9c27b0;
       }
-      .arrow5 {
-        top: 180px;
-        right: 35%;
-        transform: rotate(180deg);
-      }
-      .arrow6 {
-        bottom: 80px;
-        left: 48%;
-        transform: rotate(90deg);
+      .state-card.terminated .state-name {
+        color: #607d8b;
       }
 
-      .label {
-        position: absolute;
-        font-size: 0.85em;
-        color: #bbbbbb;
-        font-style: italic;
-      }
-
-      .label1 {
-        top: 85px;
-        left: 55%;
-      }
-      .label2 {
-        top: 120px;
-        left: 28%;
-      }
-      .label3 {
-        top: 120px;
-        right: 25%;
-      }
-      .label4 {
-        top: 200px;
-        left: 30%;
-      }
-      .label5 {
-        top: 200px;
-        right: 27%;
-      }
-      .label6 {
-        bottom: 85px;
-        left: 53%;
+      .state-desc {
+        font-size: 1em;
+        color: #ddd;
       }
 
       .hint {
@@ -220,39 +157,38 @@
     </style>
   </head>
   <body>
-    <h1>Thread Lifecycle</h1>
+    <h1>Процессын төлөвүүд</h1>
     <div class="content">
-      <p>
-        <span class="highlight">Thread-ын амьдралын мөчлөг</span> нь төрөлт
-        (New)-ээс эхлээд дуусгавар (Terminated) хүртэлх
-        <span class="highlight">төлөвүүдийг</span> илэрхийлнэ.
-      </p>
-
-      <div class="lifecycle-diagram">
-        <!-- States -->
-        <div class="state new">New<br /><small>Шинэ</small></div>
-        <div class="state ready">Ready<br /><small>Бэлэн</small></div>
-        <div class="state running">Running<br /><small>Ажиллаж буй</small></div>
-        <div class="state waiting">Waiting<br /><small>Хүлээж буй</small></div>
-        <div class="state terminated">
-          Terminated<br /><small>Дууссан</small>
+      <div class="states-container">
+        <div class="state-card new">
+          <div class="state-icon">🆕</div>
+          <div class="state-name">New</div>
+          <div class="state-desc">Шинээр үүссэн</div>
         </div>
 
-        <!-- Arrows -->
-        <div class="arrow arrow1">↓</div>
-        <div class="arrow arrow2">→</div>
-        <div class="arrow arrow3">←</div>
-        <div class="arrow arrow4">→</div>
-        <div class="arrow arrow5">←</div>
-        <div class="arrow arrow6">↓</div>
+        <div class="state-card ready">
+          <div class="state-icon">⏳</div>
+          <div class="state-name">Ready</div>
+          <div class="state-desc">CPU хүлээж буй</div>
+        </div>
 
-        <!-- Labels -->
-        <div class="label label1">Үүсгэх</div>
-        <div class="label label2">CPU олгох</div>
-        <div class="label label3">I/O хүлээх</div>
-        <div class="label label4">Цаг дуусах</div>
-        <div class="label label5">I/O дуусах</div>
-        <div class="label label6">Дуусгах</div>
+        <div class="state-card running">
+          <div class="state-icon">▶️</div>
+          <div class="state-name">Running</div>
+          <div class="state-desc">Ажиллаж буй</div>
+        </div>
+
+        <div class="state-card waiting">
+          <div class="state-icon">⏸️</div>
+          <div class="state-name">Waiting</div>
+          <div class="state-desc">I/O хүлээж буй</div>
+        </div>
+
+        <div class="state-card terminated">
+          <div class="state-icon">✅</div>
+          <div class="state-name">Terminated</div>
+          <div class="state-desc">Дууссан</div>
+        </div>
       </div>
     </div>
 

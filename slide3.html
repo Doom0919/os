@@ -1,137 +1,162 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="mn">
-<head>
-    <meta charset="UTF-8">
-    <title>Process States & Lifecycle</title>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Slide 3 - Процессын шинж чанарууд</title>
     <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
 
       body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(135deg, #0d0d0d, #1c1c1c, #3a3a3a); /* ← same as before */
-    color: #fff;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-    overflow: hidden;
-}
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #0d0d0d, #1c1c1c, #3a3a3a);
+        color: #fff;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        overflow: hidden;
+      }
 
+      h1 {
+        font-size: 3em;
+        margin-bottom: 20px;
+        text-shadow: 0 0 15px rgba(255, 235, 59, 0.7);
+        animation: glow 2s infinite alternate;
+      }
 
-        h1 {
-            font-size: 2.8em;
-            margin-bottom: 20px;
-            text-shadow: 0 0 15px rgba(255, 235, 59, 0.7);
-            animation: glow 2s infinite alternate;
+      @keyframes glow {
+        from {
+          text-shadow: 0 0 10px rgba(255, 235, 59, 0.6);
         }
-
-        @keyframes glow {
-            from { text-shadow: 0 0 10px rgba(255,235,59,0.6); }
-            to { text-shadow: 0 0 25px rgba(255,235,59,1); }
+        to {
+          text-shadow: 0 0 25px rgba(255, 235, 59, 1);
         }
+      }
 
-        .content {
-            background: rgba(255,255,255,0.05);
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.6);
-            max-width: 1000px;
-            text-align: center;
-            animation: fadeIn 1.5s ease;
-        }
+      .content {
+        background: rgba(255, 255, 255, 0.05);
+        padding: 40px;
+        border-radius: 15px;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
+        max-width: 95vw;
+        width: 1000px;
+        text-align: center;
+        animation: fadeIn 1.5s ease;
+      }
 
-        @keyframes fadeIn {
-            from {opacity:0; transform:translateY(20px);}
-            to {opacity:1; transform:translateY(0);}
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
         }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
 
-        .content p {
-            font-size: 1.4em;
-            line-height: 1.8;
-            margin-bottom: 20px;
-        }
+      .highlight {
+        color: #ffeb3b;
+        font-weight: bold;
+      }
 
-        .highlight {
-            color: #ffeb3b;
-            font-weight: bold;
-        }
+      .characteristics-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+        margin-top: 30px;
+      }
 
-        .lifecycle {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 30px;
-            margin-top: 30px;
-        }
+      .char-card {
+        background: rgba(33, 150, 243, 0.2);
+        border: 2px solid #2196f3;
+        padding: 25px;
+        border-radius: 12px;
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
+        transition: all 0.3s ease;
+        text-align: left;
+      }
 
-        .state {
-            background: #2196f3;
-            padding: 15px 25px;
-            border-radius: 12px;
-            font-weight: bold;
-            color: #fff;
-            box-shadow: 0 6px 15px rgba(0,0,0,0.5);
-            position: relative;
-            animation: pulse 2s infinite ease-in-out;
-        }
+      .char-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 10px 30px rgba(33, 150, 243, 0.8);
+      }
 
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
-        }
+      .char-card h3 {
+        color: #2196f3;
+        font-size: 1.5em;
+        margin-bottom: 15px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
 
-        .arrow {
-            width: 40px;
-            height: 40px;
-            border-top: 4px solid #ffeb3b;
-            border-right: 4px solid #ffeb3b;
-            transform: rotate(45deg);
-            margin-top: 20px;
-        }
+      .char-card p {
+        font-size: 1.1em;
+        line-height: 1.6;
+        color: #ddd;
+      }
 
-        .hint {
-            margin-top: 30px;
-            font-size: 1em;
-            color: #bbbbbb;
-            font-style: italic;
-        }
+      .icon {
+        font-size: 1.8em;
+      }
+
+      .hint {
+        margin-top: 30px;
+        font-size: 1em;
+        color: #bbbbbb;
+        font-style: italic;
+      }
     </style>
-</head>
-<body>
-    <h1>Процессын төлөв ба амьдралын мөчлөг</h1>
+  </head>
+  <body>
+    <h1>Процессын шинж чанарууд</h1>
     <div class="content">
-        <p>
-            Процесс нь <span class="highlight">шинээр үүсэх</span>, <span class="highlight">бэлэн болох</span>, 
-            <span class="highlight">ажиллах</span>, <span class="highlight">хүлээх</span>, 
-            <span class="highlight">дуусах</span гэсэн төлвүүдээр дамжин амьдралын мөчлөгөө туулдаг.
-        </p>
-        <div class="lifecycle">
-            <div class="state">New</div>
-            <div class="arrow"></div>
-            <div class="state">Ready</div>
-            <div class="arrow"></div>
-            <div class="state">Running</div>
-            <div class="arrow"></div>
-            <div class="state">Waiting</div>
-            <div class="arrow"></div>
-            <div class="state">Terminated</div>
+      <div class="characteristics-grid">
+        <div class="char-card">
+          <h3><span class="icon">🧱</span> Бие даасан мужтай</h3>
+          <p>Бие даасан санах ойн мужтай, бусдаас тусгаарлагдсан</p>
         </div>
+
+        <div class="char-card">
+          <h3><span class="icon">📦</span> Resource allocation</h3>
+          <p>Resource allocation хийгддэг - CPU, санах ой, файл г.м</p>
+        </div>
+
+        <div class="char-card">
+          <h3><span class="icon">🛡️</span> Тогтвортой байдал</h3>
+          <p>
+            Нэг процесс уналт → бусдад
+            <span class="highlight">нөлөөлөхгүй</span>
+          </p>
+        </div>
+
+        <div class="char-card">
+          <h3><span class="icon">⚙️</span> CPU scheduler</h3>
+          <p>CPU scheduler-аар удирдагдана, хуваарилагдана</p>
+        </div>
+      </div>
     </div>
 
-    <div class="hint">💡 'D' → дараагийн слайд | 'A' → өмнөх слайд руу буцах</div>
+    <div class="hint">
+      💡 'D' → дараагийн слайд | 'A' → өмнөх слайд руу буцах
+    </div>
 
     <script>
-        document.addEventListener('keydown', function(event) {
-            if(event.key.toLowerCase() === 'd') {
-                window.location.href = 'slide4.html'; // Next slide
-            }
-            if(event.key.toLowerCase() === 'a') {
-                window.location.href = 'slide2.html'; // Previous slide
-            }
-        });
+      document.addEventListener("keydown", function (event) {
+        if (event.key.toLowerCase() === "d") {
+          window.location.href = "slide4.html";
+        }
+        if (event.key.toLowerCase() === "a") {
+          window.location.href = "slide2.html";
+        }
+      });
     </script>
-</body>
+  </body>
 </html>

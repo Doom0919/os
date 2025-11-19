@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="mn">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Процесс ба Thread</title>
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #0d0d0d, #1c1c1c, #3a3a3a);
+        color: #fff;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        overflow: hidden;
+      }
+
+      .title-container {
+        text-align: center;
+        animation: fadeIn 2s ease;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      h1 {
+        font-size: 4.5em;
+        margin-bottom: 30px;
+        text-shadow: 0 0 20px rgba(255, 235, 59, 0.8);
+        animation: glow 2s infinite alternate;
+      }
+
+      @keyframes glow {
+        from {
+          text-shadow: 0 0 15px rgba(255, 235, 59, 0.6);
+        }
+        to {
+          text-shadow: 0 0 35px rgba(255, 235, 59, 1);
+        }
+      }
+
+      .subtitle {
+        font-size: 2em;
+        color: #ffeb3b;
+        margin-bottom: 50px;
+        font-weight: 300;
+      }
+
+      .topics {
+        display: flex;
+        gap: 30px;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin-top: 40px;
+      }
+
+      .topic-card {
+        background: rgba(33, 150, 243, 0.2);
+        border: 2px solid #2196f3;
+        padding: 20px 30px;
+        border-radius: 15px;
+        font-size: 1.3em;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+        transition: all 0.3s ease;
+        animation: slideUp 1.5s ease;
+      }
+
+      @keyframes slideUp {
+        from {
+          opacity: 0;
+          transform: translateY(50px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .topic-card:nth-child(1) {
+        animation-delay: 0.2s;
+      }
+      .topic-card:nth-child(2) {
+        animation-delay: 0.4s;
+      }
+      .topic-card:nth-child(3) {
+        animation-delay: 0.6s;
+      }
+      .topic-card:nth-child(4) {
+        animation-delay: 0.8s;
+      }
+
+      .topic-card:hover {
+        transform: translateY(-10px) scale(1.05);
+        box-shadow: 0 10px 30px rgba(33, 150, 243, 0.8);
+      }
+
+      .hint {
+        position: absolute;
+        bottom: 30px;
+        font-size: 1.2em;
+        color: #bbbbbb;
+        font-style: italic;
+        animation: blink 2s infinite;
+      }
+
+      @keyframes blink {
+        0%,
+        100% {
+          opacity: 0.6;
+        }
+        50% {
+          opacity: 1;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="title-container">
+      <h1>Процесс ба Thread</h1>
+      <div class="subtitle">
+        Тайлбар • Ялгаа • Шинж чанар • Амьдралын мөчлөг
+      </div>
+
+      <div class="topics">
+        <div class="topic-card">📋 Тайлбар</div>
+        <div class="topic-card">⚖️ Ялгаа</div>
+        <div class="topic-card">🔍 Шинж чанар</div>
+        <div class="topic-card">🔄 Амьдралын мөчлөг</div>
+      </div>
+    </div>
+
+    <div class="hint">💡 'D' дарж эхлэх</div>
+
+    <script>
+      document.addEventListener("keydown", function (event) {
+        if (event.key.toLowerCase() === "d") {
+          window.location.href = "slide1.html";
+        }
+      });
+    </script>
+  </body>
+</html>

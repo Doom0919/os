@@ -1,181 +1,158 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="mn">
-
-<head>
-    <meta charset="UTF-8">
-    <title>Process Control Block</title>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Slide 2 - Процесс гэж юу вэ</title>
     <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #0d0d0d, #1c1c1c, #3a3a3a);
+        color: #fff;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        overflow: hidden;
+      }
+
+      h1 {
+        font-size: 3em;
+        margin-bottom: 20px;
+        text-shadow: 0 0 15px rgba(255, 235, 59, 0.7);
+        animation: glow 2s infinite alternate;
+      }
+
+      @keyframes glow {
+        from {
+          text-shadow: 0 0 10px rgba(255, 235, 59, 0.6);
         }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #0d0d0d, #1c1c1c, #3a3a3a);
-            color: #fff;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-            overflow: hidden;
+        to {
+          text-shadow: 0 0 25px rgba(255, 235, 59, 1);
         }
+      }
 
-        h1 {
-            font-size: 3em;
-            margin-bottom: 20px;
-            text-shadow: 0 0 15px rgba(255, 235, 59, 0.7);
-            animation: glow 2s infinite alternate;
+      .content {
+        background: rgba(255, 255, 255, 0.05);
+        padding: 40px;
+        border-radius: 15px;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
+        max-width: 95vw;
+        width: 1000px;
+        text-align: center;
+        animation: fadeIn 1.5s ease;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
         }
-
-        @keyframes glow {
-            from {
-                text-shadow: 0 0 10px rgba(255, 235, 59, 0.6);
-            }
-
-            to {
-                text-shadow: 0 0 25px rgba(255, 235, 59, 1);
-            }
+        to {
+          opacity: 1;
+          transform: translateY(0);
         }
+      }
 
-        .content {
-            background: rgba(255, 255, 255, 0.05);
-            padding: 40px;
-            border-radius: 20px;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
-            max-width: 1000px;
-            text-align: center;
-            animation: fadeIn 1.5s ease;
-        }
+      .highlight {
+        color: #ffeb3b;
+        font-weight: bold;
+      }
 
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
+      .definition-box {
+        background: rgba(33, 150, 243, 0.2);
+        border: 3px solid #2196f3;
+        padding: 30px;
+        border-radius: 12px;
+        font-size: 1.5em;
+        line-height: 1.8;
+        margin-bottom: 40px;
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
+      }
 
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
+      .features {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 15px;
+        margin-top: 30px;
+      }
 
-        .content p {
-            font-size: 1.4em;
-            line-height: 1.8;
-            margin-bottom: 30px;
-        }
+      .feature-item {
+        background: rgba(255, 152, 0, 0.2);
+        border-left: 5px solid #ff9800;
+        padding: 20px;
+        border-radius: 8px;
+        text-align: left;
+        font-size: 1.2em;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+        transition: all 0.3s ease;
+      }
 
-        .highlight {
-            color: #ffeb3b;
-            font-weight: bold;
-        }
+      .feature-item:hover {
+        transform: translateX(10px);
+        box-shadow: 0 6px 20px rgba(255, 152, 0, 0.6);
+      }
 
-        .pcb {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 25px;
-            margin-top: 20px;
-        }
+      .feature-icon {
+        font-size: 1.5em;
+        margin-right: 10px;
+      }
 
-        .field {
-            background: linear-gradient(135deg, #2196f3, #1976d2);
-            padding: 20px;
-            border-radius: 12px;
-            font-weight: bold;
-            color: #fff;
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
-            position: relative;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            cursor: pointer;
-            z-index: 1;
-        }
-
-        .field:hover {
-            transform: translateY(-5px) scale(1.05);
-            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.7);
-            background: linear-gradient(135deg, #42a5f5, #1e88e5);
-        }
-
-        /* Tooltip details */
-        .detail {
-            visibility: hidden;
-            opacity: 0;
-            position: absolute;
-            bottom: -60px;
-            /* move it below the card */
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(0, 0, 0, 0.9);
-            color: #fff;
-            padding: 8px 12px;
-            border-radius: 8px;
-            font-size: 0.9em;
-            white-space: nowrap;
-            transition: opacity 0.3s ease;
-            z-index: 9999;
-            position: absolute;
-        }
-
-        .field:hover .detail {
-            visibility: visible;
-            opacity: 1;
-        }
-
-
-        .hint {
-            margin-top: 30px;
-            font-size: 1em;
-            color: #bbbbbb;
-            font-style: italic;
-        }
+      .hint {
+        margin-top: 30px;
+        font-size: 1em;
+        color: #bbbbbb;
+        font-style: italic;
+      }
     </style>
-</head>
-
-<body>
-    <h1>Process Control Block</h1>
+  </head>
+  <body>
+    <h1>Процесс гэж юу вэ?</h1>
     <div class="content">
-        <p>
-            <span class="highlight">Process Control Block (PCB)</span> нь үйлдлийн системийн
-            <span class="highlight">процессийн тухай мэдээллийг хадгалдаг</span> өгөгдлийн бүтэц юм.
-        </p>
-        <div class="pcb">
-            <div class="field">Process ID
-                <div class="detail">Процессийг ялгах өвөрмөц дугаар</div>
-            </div>
-            <div class="field">Process State
-                <div class="detail">Процессын одоогийн төлөв (Ready, Running, Waiting)</div>
-            </div>
-            <div class="field">Program Counter
-                <div class="detail">Дараагийн гүйцэтгэх зааврын хаяг</div>
-            </div>
-            <div class="field">CPU Registers
-                <div class="detail">CPU-ийн регистрүүдийн утгууд</div>
-            </div>
-            <div class="field">Memory Management Info
-                <div class="detail">Санах ойн хуваарилалт, сегмент/хуудасны мэдээлэл</div>
-            </div>
-            <div class="field">I/O Status Info
-                <div class="detail">Оролт/гаралтын төхөөрөмжийн төлөв ба хүсэлтүүд</div>
-            </div>
+      <div class="definition-box">
+        Санах ойд ачаалагдсан,
+        <span class="highlight">бие даан ажиллаж буй</span> програм
+      </div>
+
+      <div class="features">
+        <div class="feature-item">
+          <span class="feature-icon">💾</span>
+          Өөрийн гэсэн <span class="highlight">memory space</span>,
+          resources-тай
         </div>
+
+        <div class="feature-item">
+          <span class="feature-icon">🆔</span>
+          OS процесс бүрт <span class="highlight">ID</span> өгдөг (PID)
+        </div>
+
+        <div class="feature-item">
+          <span class="feature-icon">🔒</span>
+          Бусад процессоос <span class="highlight">тусгаарлагдсан</span>
+        </div>
+      </div>
     </div>
 
-    <div class="hint">💡 'D' → дараагийн слайд | 'A' → өмнөх слайд руу буцах</div>
-   
-    <script>
-        document.addEventListener('keydown', function (event) {
-            if (event.key.toLowerCase() === 'd') {
-                window.location.href = 'slide3.html'; // Next slide
-            }
-            if (event.key.toLowerCase() === 'a') {
-                window.location.href = 'slide1.html'; // Previous slide
-            }
-        });
-    </script>
-</body>
+    <div class="hint">
+      💡 'D' → дараагийн слайд | 'A' → өмнөх слайд руу буцах
+    </div>
 
+    <script>
+      document.addEventListener("keydown", function (event) {
+        if (event.key.toLowerCase() === "d") {
+          window.location.href = "slide3.html";
+        }
+        if (event.key.toLowerCase() === "a") {
+          window.location.href = "slide1.html";
+        }
+      });
+    </script>
+  </body>
 </html>

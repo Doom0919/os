@@ -2,7 +2,7 @@
 <html lang="mn">
   <head>
     <meta charset="UTF-8" />
-    <title>Slide 7 - Processes vs. Threads</title>
+    <title>Slide 6 - Thread Lifecycle</title>
     <style>
       * {
         box-sizing: border-box;
@@ -60,69 +60,155 @@
         }
       }
 
+      .content p {
+        font-size: 1.3em;
+        line-height: 1.6;
+        margin-bottom: 30px;
+      }
+
       .highlight {
         color: #ffeb3b;
         font-weight: bold;
       }
 
-      .comparison {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 30px;
-        margin-top: 30px;
+      .lifecycle-diagram {
+        position: relative;
+        width: 100%;
+        height: 400px;
+        margin-top: 20px;
       }
 
-      .column {
-        background: rgba(255, 255, 255, 0.03);
-        padding: 25px;
-        border-radius: 12px;
+      .state {
+        position: absolute;
+        background: #2196f3;
+        padding: 20px 30px;
+        border-radius: 15px;
+        font-weight: bold;
         box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
-      }
-
-      .column h2 {
-        font-size: 1.8em;
-        margin-bottom: 20px;
-        padding-bottom: 10px;
-        border-bottom: 2px solid;
-      }
-
-      .column.process h2 {
-        color: #2196f3;
-        border-color: #2196f3;
-      }
-
-      .column.thread h2 {
-        color: #ff9800;
-        border-color: #ff9800;
-      }
-
-      .feature {
-        background: rgba(255, 255, 255, 0.05);
-        padding: 15px;
-        margin: 12px 0;
-        border-radius: 8px;
-        text-align: left;
-        font-size: 1.05em;
-        line-height: 1.6;
-        box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
         transition: all 0.3s ease;
       }
 
-      .feature:hover {
-        transform: translateX(5px);
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+      .state:hover {
+        transform: scale(1.1);
+        box-shadow: 0 8px 25px rgba(33, 150, 243, 0.8);
       }
 
-      .column.process .feature {
-        border-left: 4px solid #2196f3;
+      .state.new {
+        top: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: #4caf50;
+      }
+      .state.ready {
+        top: 140px;
+        left: 15%;
+        background: #ff9800;
+      }
+      .state.running {
+        top: 140px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: #f44336;
+        animation: runningPulse 2s infinite;
+      }
+      .state.waiting {
+        top: 140px;
+        right: 15%;
+        background: #9c27b0;
+      }
+      .state.terminated {
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: #607d8b;
       }
 
-      .column.thread .feature {
-        border-left: 4px solid #ff9800;
+      @keyframes runningPulse {
+        0%,
+        100% {
+          box-shadow: 0 6px 15px rgba(244, 67, 54, 0.5);
+        }
+        50% {
+          box-shadow: 0 8px 30px rgba(244, 67, 54, 1);
+        }
       }
 
-      .feature strong {
+      .arrow {
+        position: absolute;
+        font-size: 2em;
         color: #ffeb3b;
+        animation: arrowMove 2s infinite ease-in-out;
+      }
+
+      @keyframes arrowMove {
+        0%,
+        100% {
+          opacity: 0.6;
+        }
+        50% {
+          opacity: 1;
+          transform: scale(1.2);
+        }
+      }
+
+      .arrow1 {
+        top: 80px;
+        left: 48%;
+      }
+      .arrow2 {
+        top: 160px;
+        left: 28%;
+      }
+      .arrow3 {
+        top: 160px;
+        right: 28%;
+      }
+      .arrow4 {
+        top: 180px;
+        left: 35%;
+        transform: rotate(180deg);
+      }
+      .arrow5 {
+        top: 180px;
+        right: 35%;
+        transform: rotate(180deg);
+      }
+      .arrow6 {
+        bottom: 80px;
+        left: 48%;
+        transform: rotate(90deg);
+      }
+
+      .label {
+        position: absolute;
+        font-size: 0.85em;
+        color: #bbbbbb;
+        font-style: italic;
+      }
+
+      .label1 {
+        top: 85px;
+        left: 55%;
+      }
+      .label2 {
+        top: 120px;
+        left: 28%;
+      }
+      .label3 {
+        top: 120px;
+        right: 25%;
+      }
+      .label4 {
+        top: 200px;
+        left: 30%;
+      }
+      .label5 {
+        top: 200px;
+        right: 27%;
+      }
+      .label6 {
+        bottom: 85px;
+        left: 53%;
       }
 
       .hint {
@@ -134,42 +220,39 @@
     </style>
   </head>
   <body>
-    <h1>Processes vs. Threads</h1>
+    <h1>Thread Lifecycle</h1>
     <div class="content">
-      <div class="comparison">
-        <div class="column process">
-          <h2>🔷 Process</h2>
-          <div class="feature">
-            <strong>Санах ой:</strong> Тусдаа санах ойтой
-          </div>
-          <div class="feature"><strong>Үүсгэх:</strong> Их нөөц шаарддаг</div>
-          <div class="feature">
-            <strong>Харилцаа холбоо:</strong> IPC ашиглах (өндөр зардал)
-          </div>
-          <div class="feature">
-            <strong>Бие даасан байдал:</strong> Бүрэн тусгаарлагдсан
-          </div>
-          <div class="feature"><strong>Context Switch:</strong> Удаан</div>
-          <div class="feature"><strong>PCB:</strong> Өөрийн гэсэн PCB-тай</div>
+      <p>
+        <span class="highlight">Thread-ын амьдралын мөчлөг</span> нь төрөлт
+        (New)-ээс эхлээд дуусгавар (Terminated) хүртэлх
+        <span class="highlight">төлөвүүдийг</span> илэрхийлнэ.
+      </p>
+
+      <div class="lifecycle-diagram">
+        <!-- States -->
+        <div class="state new">New<br /><small>Шинэ</small></div>
+        <div class="state ready">Ready<br /><small>Бэлэн</small></div>
+        <div class="state running">Running<br /><small>Ажиллаж буй</small></div>
+        <div class="state waiting">Waiting<br /><small>Хүлээж буй</small></div>
+        <div class="state terminated">
+          Terminated<br /><small>Дууссан</small>
         </div>
 
-        <div class="column thread">
-          <h2>🔶 Thread</h2>
-          <div class="feature">
-            <strong>Санах ой:</strong> Процесстэй хуваалцана
-          </div>
-          <div class="feature"><strong>Үүсгэх:</strong> Бага нөөц шаарддаг</div>
-          <div class="feature">
-            <strong>Харилцаа холбоо:</strong> Шууд санах ой (бага зардал)
-          </div>
-          <div class="feature">
-            <strong>Бие даасан байдал:</strong> Процесс доторх хамааралтай
-          </div>
-          <div class="feature"><strong>Context Switch:</strong> Хурдан</div>
-          <div class="feature">
-            <strong>TCB:</strong> Thread Control Block-тай
-          </div>
-        </div>
+        <!-- Arrows -->
+        <div class="arrow arrow1">↓</div>
+        <div class="arrow arrow2">→</div>
+        <div class="arrow arrow3">←</div>
+        <div class="arrow arrow4">→</div>
+        <div class="arrow arrow5">←</div>
+        <div class="arrow arrow6">↓</div>
+
+        <!-- Labels -->
+        <div class="label label1">Үүсгэх</div>
+        <div class="label label2">CPU олгох</div>
+        <div class="label label3">I/O хүлээх</div>
+        <div class="label label4">Цаг дуусах</div>
+        <div class="label label5">I/O дуусах</div>
+        <div class="label label6">Дуусгах</div>
       </div>
     </div>
 
