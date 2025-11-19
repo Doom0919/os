@@ -31,12 +31,8 @@
       }
 
       @keyframes glow {
-        from {
-          text-shadow: 0 0 10px rgba(255, 235, 59, 0.6);
-        }
-        to {
-          text-shadow: 0 0 25px rgba(255, 235, 59, 1);
-        }
+        from { text-shadow: 0 0 10px rgba(255, 235, 59, 0.6); }
+        to { text-shadow: 0 0 25px rgba(255, 235, 59, 1); }
       }
 
       .content {
@@ -45,65 +41,42 @@
         border-radius: 15px;
         box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
         max-width: 95vw;
-        width: 1000px;
-        text-align: center;
+        width: 1200px;
         animation: fadeIn 1.5s ease;
       }
 
       @keyframes fadeIn {
-        from {
-          opacity: 0;
-          transform: translateY(20px);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
       }
 
       .structure-container {
         display: flex;
-        justify-content: center;
-        margin-top: 30px;
+        justify-content:center;
+        align-items: center;
+        gap: 40px;
       }
 
-      .structure-stack {
-        width: 500px;
+      /* Shared Style */
+      .column-stack {
         display: flex;
         flex-direction: column;
-        gap: 5px;
+        gap: 10px;
       }
 
       .structure-item {
         background: linear-gradient(135deg, #2196f3, #1976d2);
         padding: 25px;
         border-radius: 10px;
-        font-size: 1.3em;
+        font-size: 1.2em;
         font-weight: bold;
         box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
         transition: all 0.3s ease;
-        position: relative;
       }
 
       .structure-item:hover {
         transform: scale(1.05);
-        box-shadow: 0 10px 30px rgba(33, 150, 243, 0.8);
-      }
-
-      .structure-item:nth-child(1) {
-        background: linear-gradient(135deg, #f44336, #d32f2f);
-      }
-      .structure-item:nth-child(2) {
-        background: linear-gradient(135deg, #ff9800, #f57c00);
-      }
-      .structure-item:nth-child(3) {
-        background: linear-gradient(135deg, #4caf50, #388e3c);
-      }
-      .structure-item:nth-child(4) {
-        background: linear-gradient(135deg, #9c27b0, #7b1fa2);
-      }
-      .structure-item:nth-child(5) {
-        background: linear-gradient(135deg, #2196f3, #1976d2);
+        box-shadow: 0 10px 25px rgba(33, 150, 243, 0.7);
       }
 
       .description {
@@ -113,44 +86,79 @@
         margin-top: 5px;
       }
 
-      .hint {
-        margin-top: 30px;
-        font-size: 1em;
-        color: #bbbbbb;
-        font-style: italic;
-      }
+      /* PCB Colors */
+      .pcb-item:nth-child(1) { background: linear-gradient(135deg, #ff5722, #e64a19); }
+      .pcb-item:nth-child(2) { background: linear-gradient(135deg, #ffc107, #ff9800); }
+      .pcb-item:nth-child(3) { background: linear-gradient(135deg, #4caf50, #388e3c); }
+      .pcb-item:nth-child(4) { background: linear-gradient(135deg, #9c27b0, #7b1fa2); }
+      .pcb-item:nth-child(5) { background: linear-gradient(135deg, #03a9f4, #0288d1); }
+
+      /* Memory Colors */
+      .memory-item:nth-child(1) { background: linear-gradient(135deg, #f44336, #d32f2f); }
+      .memory-item:nth-child(2) { background: linear-gradient(135deg, #ff9800, #f57c00); }
+      .memory-item:nth-child(3) { background: linear-gradient(135deg, #4caf50, #388e3c); }
+      .memory-item:nth-child(4) { background: linear-gradient(135deg, #9c27b0, #7b1fa2); }
+      .memory-item:nth-child(5) { background: linear-gradient(135deg, #2196f3, #1976d2); }
+
     </style>
   </head>
+
   <body>
     <h1>Процессын бүтэц</h1>
+
     <div class="content">
       <div class="structure-container">
-        <div class="structure-stack">
-          <div class="structure-item">
+
+        <!-- LEFT: PCB STRUCTURE -->
+        <div class="column-stack">
+          <div class="structure-item pcb-item">
+            📌 Process State
+            <div class="description">Ready, Running, Waiting, Terminated</div>
+          </div>
+          <div class="structure-item pcb-item">
+            🆔 PID + Parent PID
+            <div class="description">Процессын дугаар, эцэг процесс</div>
+          </div>
+          <div class="structure-item pcb-item">
+            🎛️ CPU Registers
+            <div class="description">Регистрүүд, програмын тоолуур</div>
+          </div>
+          <div class="structure-item pcb-item">
+            📋 Scheduling Info
+            <div class="description">Давтамж, priority, queue pointer</div>
+          </div>
+          <div class="structure-item pcb-item">
+            🗂️ Memory Tables & Open Files
+            <div class="description">Page table, segment table, open file list</div>
+          </div>
+        </div>
+
+        <!-- RIGHT: PROCESS MEMORY LAYOUT -->
+        <div class="column-stack">
+          <div class="structure-item memory-item">
             📄 Code сегмент
             <div class="description">Програмын код</div>
           </div>
-          <div class="structure-item">
+          <div class="structure-item memory-item">
             💾 Data сегмент
             <div class="description">Глобал болон статик өгөгдөл</div>
           </div>
-          <div class="structure-item">
+          <div class="structure-item memory-item">
             📚 Stack
             <div class="description">Функц дуудалт, локал хувьсагч</div>
           </div>
-          <div class="structure-item">
+          <div class="structure-item memory-item">
             🗄️ Heap
             <div class="description">Динамик санах ойн хуваарилалт</div>
           </div>
-          <div class="structure-item">
+          <div class="structure-item memory-item">
             🎛️ Registers + Program Counter
             <div class="description">CPU регистр, програмын тоолуур</div>
           </div>
         </div>
+
       </div>
     </div>
-
-    
 
     <script>
       document.addEventListener("keydown", function (event) {
@@ -162,5 +170,6 @@
         }
       });
     </script>
+
   </body>
 </html>

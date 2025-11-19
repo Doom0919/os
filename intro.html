@@ -29,14 +29,8 @@
       }
 
       @keyframes fadeIn {
-        from {
-          opacity: 0;
-          transform: translateY(30px);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
+        from { opacity: 0; transform: translateY(30px); }
+        to { opacity: 1; transform: translateY(0); }
       }
 
       h1 {
@@ -47,12 +41,8 @@
       }
 
       @keyframes glow {
-        from {
-          text-shadow: 0 0 15px rgba(255, 235, 59, 0.6);
-        }
-        to {
-          text-shadow: 0 0 35px rgba(255, 235, 59, 1);
-        }
+        from { text-shadow: 0 0 15px rgba(255, 235, 59, 0.6); }
+        to { text-shadow: 0 0 35px rgba(255, 235, 59, 1); }
       }
 
       .subtitle {
@@ -82,32 +72,25 @@
       }
 
       @keyframes slideUp {
-        from {
-          opacity: 0;
-          transform: translateY(50px);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
+        from { opacity: 0; transform: translateY(50px); }
+        to { opacity: 1; transform: translateY(0); }
       }
 
-      .topic-card:nth-child(1) {
-        animation-delay: 0.2s;
-      }
-      .topic-card:nth-child(2) {
-        animation-delay: 0.4s;
-      }
-      .topic-card:nth-child(3) {
-        animation-delay: 0.6s;
-      }
-      .topic-card:nth-child(4) {
-        animation-delay: 0.8s;
-      }
+      .topic-card:nth-child(1) { animation-delay: 0.2s; }
+      .topic-card:nth-child(2) { animation-delay: 0.4s; }
+      .topic-card:nth-child(3) { animation-delay: 0.6s; }
+      .topic-card:nth-child(4) { animation-delay: 0.8s; }
 
       .topic-card:hover {
         transform: translateY(-10px) scale(1.05);
         box-shadow: 0 10px 30px rgba(33, 150, 243, 0.8);
+      }
+
+      .members {
+        margin-top: 50px;
+        font-size: 1.3em;
+        line-height: 1.8;
+        text-align: center;
       }
 
       .hint {
@@ -120,13 +103,8 @@
       }
 
       @keyframes blink {
-        0%,
-        100% {
-          opacity: 0.6;
-        }
-        50% {
-          opacity: 1;
-        }
+        0%, 100% { opacity: 0.6; }
+        50% { opacity: 1; }
       }
     </style>
   </head>
@@ -143,9 +121,18 @@
         <div class="topic-card">🔍 Шинж чанар</div>
         <div class="topic-card">🔄 Амьдралын мөчлөг</div>
       </div>
+
+      <!-- Members section -->
+      <div class="members">
+        <p>👨‍🎓 Б. Өсөхбяр — B232270074</p>
+        <p>👨‍🎓 Б. Буянтогтох — B232270093</p>
+        <p>👨‍🎓 Э. Цэгмид — B232270107</p>
+        <p>👨‍🎓 О. Төрболд — B232270090</p>
+      </div>
     </div>
 
-  
+    <div class="hint">💡 'D' → дараагийн слайд</div>
+
     <script>
       document.addEventListener("keydown", function (event) {
         if (event.key.toLowerCase() === "d") {
