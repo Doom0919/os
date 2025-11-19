@@ -2,7 +2,7 @@
 <html lang="mn">
   <head>
     <meta charset="UTF-8" />
-    <title>Slide 8 - Multithreading Explained</title>
+    <title>Multithreading Explained</title>
     <style>
       * {
         box-sizing: border-box;
@@ -19,51 +19,44 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        padding: 15px;
+        padding: 20px;
         overflow: hidden;
       }
 
       h1 {
-        font-size: 3em;
-        margin-bottom: 20px;
+        font-size: 2.8em;
+        margin-bottom: 25px;
         text-shadow: 0 0 15px rgba(255, 235, 59, 0.7);
         animation: glow 2s infinite alternate;
       }
 
       @keyframes glow {
-        from {
-          text-shadow: 0 0 10px rgba(255, 235, 59, 0.6);
-        }
-        to {
-          text-shadow: 0 0 25px rgba(255, 235, 59, 1);
-        }
+        from { text-shadow: 0 0 10px rgba(255, 235, 59, 0.6); }
+        to { text-shadow: 0 0 25px rgba(255, 235, 59, 1); }
       }
 
       .content {
         background: rgba(255, 255, 255, 0.05);
-        padding: 15px;
+        padding: 30px;
         border-radius: 15px;
         box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
-        max-width: 1100px;
+        max-width: 1300px;
         text-align: center;
         animation: fadeIn 1.5s ease;
       }
 
       @keyframes fadeIn {
-        from {
-          opacity: 0;
-          transform: translateY(20px);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
       }
 
-      .content > p {
+      .intro-text {
         font-size: 1.3em;
-        line-height: 1.6;
-        margin-bottom: 30px;
+        line-height: 1.7;
+        margin-bottom: 35px;
+        max-width: 900px;
+        margin-left: auto;
+        margin-right: auto;
       }
 
       .highlight {
@@ -71,91 +64,190 @@
         font-weight: bold;
       }
 
-      .demo-area {
-        display: flex;
-        gap: 40px;
-        margin-top: 30px;
-        justify-content: center;
+      .main-demo {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 30px;
+        margin-bottom: 30px;
       }
 
-      .cpu-section {
-        flex: 1;
-        max-width: 450px;
-      }
-
-      .cpu-box {
-        background: rgba(33, 150, 243, 0.2);
+      /* CPU Cores Section */
+      .cpu-container {
+        background: rgba(33, 150, 243, 0.1);
         border: 3px solid #2196f3;
-        border-radius: 12px;
-        padding: 20px;
+        border-radius: 15px;
+        padding: 25px;
+      }
+
+      .section-title {
+        font-size: 1.6em;
+        color: #2196f3;
+        margin-bottom: 20px;
+        font-weight: bold;
+      }
+
+      .cores-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
         margin-bottom: 20px;
       }
 
-      .cpu-label {
-        font-size: 1.2em;
+      .core-box {
+        background: linear-gradient(135deg, #1976d2, #2196f3);
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
+        position: relative;
+        overflow: hidden;
+        min-height: 100px;
+      }
+
+      .core-label {
+        font-size: 1.1em;
         font-weight: bold;
-        color: #2196f3;
-        margin-bottom: 15px;
+        margin-bottom: 10px;
       }
 
-      .core-container {
-        display: flex;
-        gap: 10px;
-        justify-content: center;
-        flex-wrap: wrap;
+      .core-thread {
+        background: rgba(255, 152, 0, 0.9);
+        padding: 8px 12px;
+        border-radius: 6px;
+        font-size: 0.85em;
+        margin-top: 8px;
+        animation: threadPulse 2s infinite;
+        box-shadow: 0 3px 8px rgba(0, 0, 0, 0.4);
       }
 
-      .core {
-        background: #2196f3;
-        padding: 12px 20px;
-        border-radius: 8px;
-        font-weight: bold;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
-        min-width: 80px;
+      @keyframes threadPulse {
+        0%, 100% { transform: scale(1); opacity: 1; }
+        50% { transform: scale(1.03); opacity: 0.9; }
       }
 
-      .threads-running {
+      .core-box.active {
+        animation: coreActive 1s infinite;
+      }
+
+      @keyframes coreActive {
+        0%, 100% { box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5); }
+        50% { box-shadow: 0 0 30px rgba(255, 235, 59, 0.6); }
+      }
+
+      /* Thread Pool Section */
+      .thread-pool {
+        background: rgba(76, 175, 80, 0.1);
+        border: 3px solid #4caf50;
+        border-radius: 15px;
+        padding: 25px;
+      }
+
+      .thread-pool .section-title {
+        color: #4caf50;
+      }
+
+      .thread-queue {
         display: flex;
         flex-direction: column;
-        gap: 8px;
-        margin-top: 15px;
+        gap: 12px;
+        min-height: 300px;
       }
 
-      .thread-bar {
-        background: #ff9800;
-        padding: 10px;
-        border-radius: 6px;
-        font-size: 0.9em;
+      .thread-item {
+        background: linear-gradient(135deg, #ff9800, #ff6f00);
+        padding: 15px 20px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+        animation: slideIn 0.5s ease;
         position: relative;
         overflow: hidden;
       }
 
-      .thread-bar::before {
+      @keyframes slideIn {
+        from { opacity: 0; transform: translateX(30px); }
+        to { opacity: 1; transform: translateX(0); }
+      }
+
+      .thread-item::before {
         content: "";
         position: absolute;
         top: 0;
-        left: -100%;
+        left: 0;
         width: 100%;
         height: 100%;
-        background: linear-gradient(
-          90deg,
-          transparent,
-          rgba(255, 255, 255, 0.3),
-          transparent
-        );
-        animation: threadProgress 2s infinite;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+        animation: shimmer 2s infinite;
       }
 
-      @keyframes threadProgress {
-        0% {
-          left: -100%;
-        }
-        100% {
-          left: 100%;
-        }
+      @keyframes shimmer {
+        0% { left: -100%; }
+        100% { left: 100%; }
       }
 
-      .benefits {
+      .thread-name {
+        font-weight: bold;
+        font-size: 1.05em;
+      }
+
+      .thread-progress {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .progress-bar {
+        width: 100px;
+        height: 8px;
+        background: rgba(0, 0, 0, 0.3);
+        border-radius: 4px;
+        overflow: hidden;
+      }
+
+      .progress-fill {
+        height: 100%;
+        background: #4caf50;
+        border-radius: 4px;
+        transition: width 0.3s ease;
+      }
+
+      /* Stats Section */
+      .stats-container {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 15px;
+        margin-top: 30px;
+      }
+
+      .stat-box {
+        background: rgba(255, 255, 255, 0.05);
+        padding: 20px;
+        border-radius: 12px;
+        border: 2px solid rgba(255, 235, 59, 0.3);
+        transition: all 0.3s ease;
+      }
+
+      .stat-box:hover {
+        transform: translateY(-5px);
+        border-color: #ffeb3b;
+        box-shadow: 0 8px 20px rgba(255, 235, 59, 0.2);
+      }
+
+      .stat-value {
+        font-size: 2.2em;
+        color: #ffeb3b;
+        font-weight: bold;
+        margin-bottom: 5px;
+      }
+
+      .stat-label {
+        font-size: 0.95em;
+        color: #bbb;
+      }
+
+      /* Benefits Grid */
+      .benefits-grid {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
         gap: 15px;
@@ -163,28 +255,30 @@
       }
 
       .benefit-card {
-        background: rgba(76, 175, 80, 0.2);
+        background: linear-gradient(135deg, rgba(76, 175, 80, 0.15), rgba(76, 175, 80, 0.05));
         border: 2px solid #4caf50;
         padding: 20px;
-        border-radius: 10px;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+        border-radius: 12px;
+        text-align: left;
         transition: all 0.3s ease;
       }
 
       .benefit-card:hover {
         transform: translateY(-5px);
-        box-shadow: 0 6px 20px rgba(76, 175, 80, 0.6);
+        box-shadow: 0 8px 20px rgba(76, 175, 80, 0.4);
+        border-color: #66bb6a;
       }
 
       .benefit-card h3 {
         color: #4caf50;
+        font-size: 1.15em;
         margin-bottom: 10px;
-        font-size: 1.1em;
       }
 
       .benefit-card p {
         font-size: 0.95em;
-        line-height: 1.5;
+        line-height: 1.6;
+        color: #ddd;
       }
 
       .hint {
@@ -193,57 +287,106 @@
         color: #bbbbbb;
         font-style: italic;
       }
+
+      .visual-indicator {
+        display: inline-block;
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: #4caf50;
+        margin-left: 8px;
+        animation: blink 1.5s infinite;
+      }
+
+      @keyframes blink {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.3; }
+      }
     </style>
   </head>
   <body>
-    <h1>Multithreading Explained</h1>
+    <h1>🧵 Multithreading Explained</h1>
     <div class="content">
-      <p>
+      <p class="intro-text">
         <span class="highlight">Multithreading</span> нь нэг процессийн доторх
         олон thread-үүдийг <span class="highlight">зэрэг ажиллуулах</span>
-        технологи юм. Энэ нь CPU-ын гүйцэтгэлийг дээшлүүлнэ.
+        технологи бөгөөд CPU-ын бүх цөмүүдийг ашиглан гүйцэтгэлийг эрс дээшлүүлнэ.
       </p>
 
-      <div class="demo-area">
-        <div class="cpu-section">
-          <div class="cpu-box">
-            <div class="cpu-label">🖥️ CPU Cores</div>
-            <div class="core-container">
-              <div class="core">Core 1</div>
-              <div class="core">Core 2</div>
-              <div class="core">Core 3</div>
-              <div class="core">Core 4</div>
+      <div class="main-demo">
+        <!-- CPU Cores -->
+        <div class="cpu-container">
+          <div class="section-title">🖥️ CPU Cores <span class="visual-indicator"></span></div>
+          <div class="cores-grid" id="coresGrid">
+            <div class="core-box" data-core="1">
+              <div class="core-label">Core 1</div>
+            </div>
+            <div class="core-box" data-core="2">
+              <div class="core-label">Core 2</div>
+            </div>
+            <div class="core-box" data-core="3">
+              <div class="core-label">Core 3</div>
+            </div>
+            <div class="core-box" data-core="4">
+              <div class="core-label">Core 4</div>
             </div>
           </div>
+          <div class="stats-container" style="grid-template-columns: repeat(2, 1fr); margin-top: 20px;">
+            <div class="stat-box">
+              <div class="stat-value" id="activeThreads">0</div>
+              <div class="stat-label">Идэвхтэй threads</div>
+            </div>
+            <div class="stat-box">
+              <div class="stat-value" id="cpuLoad">0%</div>
+              <div class="stat-label">CPU ачаалал</div>
+            </div>
+          </div>
+        </div>
 
-          <div class="cpu-box">
-            <div class="cpu-label">⚡ Ажиллаж буй Threads</div>
-            <div class="threads-running">
-              <div class="thread-bar">Thread 1 - Өгөгдөл унших</div>
-              <div class="thread-bar">Thread 2 - Тооцоолол хийх</div>
-              <div class="thread-bar">Thread 3 - UI шинэчлэх</div>
-              <div class="thread-bar">Thread 4 - Network хүсэлт</div>
-            </div>
-          </div>
+        <!-- Thread Pool -->
+        <div class="thread-pool">
+          <div class="section-title">⚡ Thread Pool</div>
+          <div class="thread-queue" id="threadQueue"></div>
         </div>
       </div>
 
-      <div class="benefits">
+      <!-- Statistics -->
+      <div class="stats-container">
+        <div class="stat-box">
+          <div class="stat-value" id="totalTasks">0</div>
+          <div class="stat-label">Нийт даалгавар</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-value" id="completedTasks">0</div>
+          <div class="stat-label">Дууссан</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-value" id="throughput">0</div>
+          <div class="stat-label">Tasks/sec</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-value" id="efficiency">0%</div>
+          <div class="stat-label">Үр ашиг</div>
+        </div>
+      </div>
+
+      <!-- Benefits -->
+      <div class="benefits-grid">
         <div class="benefit-card">
           <h3>✅ Хурдан ажиллагаа</h3>
-          <p>Олон ажлыг зэрэг гүйцэтгэснээр нийт цаг хугацааг багасгана</p>
+          <p>Олон даалгаврыг зэрэг гүйцэтгэснээр нийт ажлын хугацаа 4-8 дахин хурдасна</p>
         </div>
         <div class="benefit-card">
           <h3>✅ CPU ашиглалт өндөр</h3>
-          <p>Процессорын бүх цөмүүдийг оновчтой ашиглана</p>
+          <p>Процессорын бүх цөмүүд хамтдаа ажиллаж 100% ачаалалд хүрнэ</p>
         </div>
         <div class="benefit-card">
           <h3>✅ Хариу үйлдэл сайжирна</h3>
-          <p>UI thread тусдаа ажилласнаар програм гацдаггүй</p>
+          <p>UI thread бие даан ажиллаж програм гацалт үүсгэхгүй</p>
         </div>
         <div class="benefit-card">
           <h3>✅ Нөөц хуваалцах</h3>
-          <p>Нэг процессийн нөөцийг олон thread хуваалцана</p>
+          <p>Нэг процессийн санах ой, нөөцийг олон thread хамтдаа хуваалцана</p>
         </div>
       </div>
     </div>
@@ -253,6 +396,141 @@
     </div>
 
     <script>
+      const tasks = [
+        { name: "Өгөгдөл унших", duration: 3 },
+        { name: "Тооцоолол хийх", duration: 4 },
+        { name: "UI шинэчлэх", duration: 2 },
+        { name: "Network хүсэлт", duration: 5 },
+        { name: "Файл боловсруулах", duration: 3 },
+        { name: "JSON парс хийх", duration: 2 },
+        { name: "DB Query", duration: 4 },
+        { name: "Image боловсруулах", duration: 5 }
+      ];
+
+      let threads = [];
+      let taskId = 0;
+      let totalTasks = 0;
+      let completedTasks = 0;
+      let recentCompletions = [];
+      let startTime = Date.now();
+
+      class Thread {
+        constructor(id, task) {
+          this.id = id;
+          this.task = task;
+          this.progress = 0;
+          this.core = Math.floor(Math.random() * 4) + 1;
+          this.startTime = Date.now();
+        }
+
+        update() {
+          const elapsed = (Date.now() - this.startTime) / 1000;
+          this.progress = Math.min(100, (elapsed / this.task.duration) * 100);
+          return this.progress >= 100;
+        }
+      }
+
+      function createThread() {
+        const task = tasks[Math.floor(Math.random() * tasks.length)];
+        taskId++;
+        totalTasks++;
+        const thread = new Thread(taskId, task);
+        threads.push(thread);
+        updateDisplay();
+      }
+
+      function updateDisplay() {
+        const queue = document.getElementById('threadQueue');
+        queue.innerHTML = '';
+
+        threads.forEach(thread => {
+          const item = document.createElement('div');
+          item.className = 'thread-item';
+          item.innerHTML = `
+            <div class="thread-name">Thread ${thread.id}: ${thread.task.name}</div>
+            <div class="thread-progress">
+              <div class="progress-bar">
+                <div class="progress-fill" style="width: ${thread.progress}%"></div>
+              </div>
+              <span>${Math.round(thread.progress)}%</span>
+            </div>
+          `;
+          queue.appendChild(item);
+        });
+
+        // Update core displays
+        const cores = document.querySelectorAll('.core-box');
+        cores.forEach(core => {
+          const coreNum = parseInt(core.dataset.core);
+          const coreThreads = threads.filter(t => t.core === coreNum);
+          
+          // Clear previous threads
+          const existingThreads = core.querySelectorAll('.core-thread');
+          existingThreads.forEach(el => el.remove());
+          
+          if (coreThreads.length > 0) {
+            core.classList.add('active');
+            coreThreads.forEach(t => {
+              const threadEl = document.createElement('div');
+              threadEl.className = 'core-thread';
+              threadEl.textContent = `T${t.id}: ${Math.round(t.progress)}%`;
+              core.appendChild(threadEl);
+            });
+          } else {
+            core.classList.remove('active');
+          }
+        });
+
+        updateStats();
+      }
+
+      function updateStats() {
+        document.getElementById('activeThreads').textContent = threads.length;
+        document.getElementById('totalTasks').textContent = totalTasks;
+        document.getElementById('completedTasks').textContent = completedTasks;
+        
+        const cpuLoad = Math.min(100, threads.length * 25);
+        document.getElementById('cpuLoad').textContent = cpuLoad + '%';
+
+        // Calculate throughput
+        const elapsed = (Date.now() - startTime) / 1000;
+        const throughput = elapsed > 0 ? (completedTasks / elapsed).toFixed(1) : 0;
+        document.getElementById('throughput').textContent = throughput;
+
+        // Calculate efficiency
+        const maxPossible = elapsed * 4; // 4 cores
+        const efficiency = maxPossible > 0 ? Math.min(100, (completedTasks / maxPossible) * 100).toFixed(0) : 0;
+        document.getElementById('efficiency').textContent = efficiency + '%';
+      }
+
+      function tick() {
+        threads.forEach((thread, index) => {
+          const completed = thread.update();
+          if (completed) {
+            completedTasks++;
+            threads.splice(index, 1);
+          }
+        });
+
+        updateDisplay();
+      }
+
+      // Auto-create threads
+      setInterval(() => {
+        if (threads.length < 6 && totalTasks < 50) {
+          createThread();
+        }
+      }, 2000);
+
+      // Update thread progress
+      setInterval(tick, 100);
+
+      // Initial threads
+      setTimeout(() => createThread(), 500);
+      setTimeout(() => createThread(), 1000);
+      setTimeout(() => createThread(), 1500);
+
+      // Keyboard navigation
       document.addEventListener("keydown", function (event) {
         if (event.key.toLowerCase() === "d") {
           window.location.href = "slide8.html";
