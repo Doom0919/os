@@ -1,171 +1,106 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="mn">
   <head>
     <meta charset="UTF-8" />
     <title>Slide 16 - Security ялгаа</title>
     <style>
       * {
-        box-sizing: border-box;
         margin: 0;
         padding: 0;
+        box-sizing: border-box;
       }
-
       body {
-        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        font-family: "Segoe UI", sans-serif;
         background: linear-gradient(135deg, #0d0d0d, #1c1c1c, #3a3a3a);
         color: #fff;
         min-height: 100vh;
         display: flex;
-        flex-direction: column;
-        align-items: center;
         justify-content: center;
-        padding: 20px;
-        overflow: hidden;
+        align-items: center;
+        flex-direction: column;
       }
-
       h1 {
         font-size: 3em;
         margin-bottom: 20px;
-        text-shadow: 0 0 15px rgba(255, 235, 59, 0.7);
-        animation: glow 2s infinite alternate;
       }
-
-      @keyframes glow {
-        from {
-          text-shadow: 0 0 10px rgba(255, 235, 59, 0.6);
-        }
-        to {
-          text-shadow: 0 0 25px rgba(255, 235, 59, 1);
-        }
-      }
-
       .content {
         background: rgba(255, 255, 255, 0.05);
         padding: 40px;
         border-radius: 15px;
-        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
-        max-width: 95vw;
         width: 1000px;
+        max-width: 95vw;
         text-align: center;
-        animation: fadeIn 1.5s ease;
       }
-
-      @keyframes fadeIn {
-        from {
-          opacity: 0;
-          transform: translateY(20px);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      }
-
       .comparison {
         display: grid;
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: 1fr 1fr;
         gap: 30px;
         margin-top: 30px;
       }
-
       .security-card {
-        background: rgba(255, 255, 255, 0.03);
-        padding: 35px;
+        padding: 30px;
         border-radius: 12px;
+        background: rgba(255, 255, 255, 0.07);
         box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
-        transition: all 0.3s ease;
+        transition: 0.3s;
       }
-
       .security-card:hover {
-        transform: translateY(-8px);
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+        transform: translateY(-5px);
       }
-
-      .security-card.safe {
+      .safe {
         border: 3px solid #4caf50;
-        background: rgba(76, 175, 80, 0.1);
+        background: rgba(76, 175, 80, 0.15);
       }
-
-      .security-card.risky {
+      .risky {
         border: 3px solid #f44336;
-        background: rgba(244, 67, 54, 0.1);
+        background: rgba(244, 67, 54, 0.15);
       }
-
       .security-icon {
         font-size: 4em;
-        margin-bottom: 20px;
+        margin-bottom: 10px;
       }
-
-      .security-card h2 {
-        font-size: 2em;
-        margin-bottom: 20px;
-      }
-
-      .security-card.safe h2 {
-        color: #4caf50;
-      }
-
-      .security-card.risky h2 {
-        color: #f44336;
-      }
-
       .security-details {
         font-size: 1.2em;
-        line-height: 1.8;
-        color: #ddd;
+        line-height: 1.7;
       }
-
       .highlight {
         color: #ffeb3b;
-        font-weight: bold;
-      }
-
-      .hint {
-        margin-top: 30px;
-        font-size: 1em;
-        color: #bbbbbb;
-        font-style: italic;
       }
     </style>
   </head>
+
   <body>
     <h1>Security ялгаа</h1>
+
     <div class="content">
       <div class="comparison">
         <div class="security-card safe">
           <div class="security-icon">🛡️</div>
           <h2>Процесс</h2>
           <div class="security-details">
-            Процессүүд хоорондоо <span class="highlight">тусгаарлагдсан</span
+            ✔ Тусдаа санах ойтой → <span class="highlight">аюулгүй</span
             ><br /><br />
-            ✅ Аюулгүй<br />
-            ✅ Нэг процесс унах → бусдад нөлөөгүй<br />
-            ✅ Нууцлал сайн хадгалагдана
+            ✔ Нэг процесс уналаа → бусдад нөлөөлөхгүй<br />
+            ✔ Нууцлал өндөр түвшинд
           </div>
         </div>
 
         <div class="security-card risky">
           <div class="security-icon">⚠️</div>
-          <h2>Салбар процесс</h2>
+          <h2>Thread</h2>
           <div class="security-details">
-            Салбар процессууд <span class="highlight">санах ой хуваалцана</span
-            ><br /><br />
-            ⚠️ Алдаанд эмзэг<br />
-            ⚠️ Нэг салбар процесс унахад бүх салбар процесс унана<br />
-            ⚠️ Race condition эрсдэлтэй
+            ⚠ Shared memory → алдаа гарахад бүх Thread нөлөөлнө<br /><br />
+            ⚠ Race condition эрсдэлтэй<br />
+            ⚠ Synchronization алдаа → deadlock / data corruption үүснэ
           </div>
         </div>
       </div>
     </div>
 
     <script>
-      document.addEventListener("keydown", function (event) {
-        if (event.key.toLowerCase() === "d") {
-          window.location.href = "slide20.html";
-        }
-        if (event.key.toLowerCase() === "a") {
-          window.location.href = "slide16.html";
-        }
+      document.addEventListener("keydown", (e) => {
+        if (e.key.toLowerCase() === "d") location.href = "slide20.html";
+        if (e.key.toLowerCase() === "a") location.href = "slide16.html";
       });
     </script>
   </body>

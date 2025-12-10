@@ -1,222 +1,98 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="mn">
   <head>
     <meta charset="UTF-8" />
-    <title>Slide 10 - Real Examples + Conclusion</title>
+    <title>Slide 17 - Conclusion</title>
     <style>
       * {
-        box-sizing: border-box;
         margin: 0;
         padding: 0;
+        box-sizing: border-box;
       }
-
       body {
-        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        font-family: "Segoe UI", sans-serif;
         background: linear-gradient(135deg, #0d0d0d, #1c1c1c, #3a3a3a);
         color: #fff;
         min-height: 100vh;
         display: flex;
         flex-direction: column;
-        align-items: center;
         justify-content: center;
+        align-items: center;
         padding: 20px;
-        overflow-x: hidden;
       }
-
       h1 {
         font-size: 3em;
         margin-bottom: 20px;
         text-shadow: 0 0 15px rgba(255, 235, 59, 0.7);
-        animation: glow 2s infinite alternate;
       }
-
-      @keyframes glow {
-        from {
-          text-shadow: 0 0 10px rgba(255, 235, 59, 0.6);
-        }
-        to {
-          text-shadow: 0 0 25px rgba(255, 235, 59, 1);
-        }
-      }
-
       .content {
         background: rgba(255, 255, 255, 0.05);
-        padding: 30px;
+        padding: 35px;
         border-radius: 15px;
-        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
+        width: 900px;
         max-width: 95vw;
-        width: 1000px;
         text-align: center;
-        animation: fadeIn 1.5s ease;
       }
-
-      @keyframes fadeIn {
-        from {
-          opacity: 0;
-          transform: translateY(20px);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
+      .conclusion-box {
+        background: rgba(76, 175, 80, 0.15);
+        border: 3px solid #4caf50;
+        padding: 25px;
+        border-radius: 12px;
       }
-
+      .point {
+        margin: 12px 0;
+        background: rgba(255, 255, 255, 0.07);
+        padding: 15px;
+        border-left: 4px solid #4caf50;
+        border-radius: 6px;
+        font-size: 1.15em;
+        text-align: left;
+      }
       .highlight {
         color: #ffeb3b;
         font-weight: bold;
       }
-
-      .section {
-        margin-bottom: 30px;
-      }
-
-      .section-title {
-        font-size: 1.8em;
-        color: #2196f3;
-        margin-bottom: 20px;
-        padding-bottom: 10px;
-        border-bottom: 2px solid #2196f3;
-      }
-
-      .examples-grid {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 15px;
-        margin-bottom: 30px;
-      }
-
-      .example-card {
-        background: rgba(33, 150, 243, 0.2);
-        border: 2px solid #2196f3;
-        padding: 20px;
-        border-radius: 10px;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
-        transition: all 0.3s ease;
-        text-align: left;
-      }
-
-      .example-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 6px 20px rgba(33, 150, 243, 0.6);
-      }
-
-      .example-icon {
-        font-size: 2.5em;
-        margin-bottom: 10px;
-      }
-
-      .example-card h3 {
-        color: #2196f3;
-        margin-bottom: 10px;
-        font-size: 1.1em;
-      }
-
-      .example-card p {
-        font-size: 0.9em;
-        line-height: 1.5;
-        color: #ddd;
-      }
-
-      .conclusion-box {
-        background: rgba(76, 175, 80, 0.2);
-        border: 3px solid #4caf50;
-        padding: 25px;
-        border-radius: 12px;
-        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
-        margin-top: 20px;
-      }
-
-      .conclusion-title {
-        font-size: 1.8em;
-        color: #4caf50;
-        margin-bottom: 15px;
-      }
-
-      .conclusion-points {
-        text-align: left;
-        max-width: 800px;
-        margin: 0 auto;
-      }
-
-      .conclusion-point {
-        background: rgba(255, 255, 255, 0.05);
-        padding: 15px;
-        margin: 10px 0;
-        border-radius: 8px;
-        border-left: 4px solid #4caf50;
-        font-size: 1em;
-        line-height: 1.6;
-      }
-
       .thank-you {
-        margin-top: 30px;
+        margin-top: 25px;
         font-size: 2em;
         color: #ffeb3b;
         font-weight: bold;
-        animation: thankYouPulse 2s infinite;
-      }
-
-      @keyframes thankYouPulse {
-        0%,
-        100% {
-          transform: scale(1);
-        }
-        50% {
-          transform: scale(1.05);
-        }
-      }
-
-      .hint {
-        margin-top: 30px;
-        font-size: 1em;
-        color: #bbbbbb;
-        font-style: italic;
-      }
-
-      @media (max-width: 768px) {
-        .examples-grid {
-          grid-template-columns: 1fr;
-        }
       }
     </style>
   </head>
-  <body>
-    <h1>Conclusion</h1>
-    <div class="content">
-      <div class="section">
-        
 
+  <body>
+    <h1>Дүгнэлт</h1>
+
+    <div class="content">
       <div class="conclusion-box">
-        <h2 class="conclusion-title">📝 Дүгнэлт</h2>
-        <div class="conclusion-points">
-          <div class="conclusion-point">
-            ✅ <span class="highlight">Process</span> нь бие даасан програмын
-            гүйцэтгэл
-          </div>
-          <div class="conclusion-point">
-            ✅ <span class="highlight">Thread</span> нь процессийн дотоод
-            гүйцэтгэлийн нэгж
-          </div>
-          <div class="conclusion-point">
-            ✅ <span class="highlight">Multithreading</span> гүйцэтгэл, хариу
-            үйлдлийг сайжруулна
-          </div>
-          <div class="conclusion-point">
-            ✅ <span class="highlight">Synchronization</span> thread асуудлыг
-            шийддэг
-          </div>
+        <div class="point">
+          ✔ <span class="highlight">Process</span> — тусдаа санах ойтой,
+          тогтвортой.
         </div>
-        <div class="thank-you">Анхаарал тавьсанд баярлалаа! 🎉</div>
+
+        <div class="point">
+          ✔ <span class="highlight">Thread</span> — shared memory ашигладаг тул
+          хурдан, хөнгөн.
+        </div>
+
+        <div class="point">✔ Performance → Threads илүү хурдан харилцдаг.</div>
+
+        <div class="point">
+          ✔ Security → Processes илүү найдвартай, тусгаарлагдсан.
+        </div>
+
+        <div class="point">
+          ✔ Synchronization → Threads дээр зайлшгүй хэрэгтэй.
+        </div>
       </div>
+
+      <div class="thank-you">Анхаарал хандуулсанд баярлалаа! 🎉</div>
     </div>
 
     <script>
-      document.addEventListener("keydown", function (event) {
-        if (event.key.toLowerCase() === "a") {
-          window.location.href = "slide17.html";
-        }
-      
-        // No 'D' key since this is the last slide
+      document.addEventListener("keydown", (e) => {
+        if (e.key.toLowerCase() === "a") location.href = "slide17.html";
       });
     </script>
   </body>
